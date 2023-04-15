@@ -11,10 +11,17 @@
         document.body.appendChild(app.view);
         document.addEventListener('keydown', onKeyDown, false);
 
+        /* IMPORTANT VARIABLES */
+        const sadCount = 0;
+        const angryCount = 0;
+        const happyCount = 0;
+        const disgustCount = 0;
+
         /* CONTAINERS */
         const startContainer = new PIXI.Container();
         const instructionsContainer = new PIXI.Container();
         const gameContainer = new PIXI.Container();
+        const endContainer = new  PIXI.Container();
 
         /* ENUMS */
         const colors = {
@@ -102,73 +109,116 @@
             strokeThickness: 5,
         });
 
+        const withdoutShadowStyle = new PIXI.TextStyle({
+            fontFamily: 'Courier New',
+            fontSize: 32,
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            fill: [colors.BLACK], // gradient
+            stroke: colors.WHITE,
+            strokeThickness: 5,
+        });
+
+        const paragraphStyle = new PIXI.TextStyle({
+            fontFamily: 'Courier New',
+            fontSize: 20,
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            fill: [colors.BLACK], // gradient
+            stroke: colors.WHITE,
+            strokeThickness: 5,
+            wordWrap: true,
+            //wordWrapWidth: 100
+        });
+
+        /* BACKGROUND */
+        const background = PIXI.Sprite.from('background.jpeg');
+        background.tint = colors.BLACK;
+        app.stage.addChild(background);
+
         /* START ELEMENTS */
         // game name
         const title = new PIXI.Text('MY PATH', titleStyle);
         title.x = app.screen.width / 2.5;
         title.y = 30;
         // character
-        const ghost = PIXI.Sprite.from('bunny.png');
-        ghost.x = app.screen.width / 2.1;
-        ghost.y = 160;
+        const ghost = PIXI.Sprite.from('Personaje_jugable_1.png');
+        ghost.x = app.screen.width / 2.3;
+        ghost.y = 100;
+        ghost.scale.set(0.4)
         // instructions title
         const instruction = new PIXI.Text("Instrucciones", titleStyle);
         instruction.x = app.screen.width / 3;
         instruction.y = 265;
-        // keys to move
-        const inst1 = new PIXI.Text("A, W, S, D", keysStyle);
-        inst1.x = app.screen.width / 12;
-        inst1.y = 350;
-        // arrow1
-        const arrow1 = new PIXI.Text("->", arrowStyle);
-        arrow1.x = app.screen.width / 5;
-        arrow1.y = 350;
-        // text1
-        const text1 = new PIXI.Text("Mover al fantasmita perdido", arrowStyle);
-        text1.x = app.screen.width / 4;
-        text1.y = 350;
-        // game objective
-        const inst2 = new PIXI.Text("Objetivo", keysStyle);
-        inst2.x = app.screen.width / 12;
-        inst2.y = 400;
-        // arrow2
-        const arrow2 = new PIXI.Text("->", arrowStyle);
-        arrow2.x = app.screen.width / 5;
-        arrow2.y = 400;
-        // text2
-        const text2 = new PIXI.Text("Elige los cristales emocionales que quieras para averiguar tu identidad", arrowStyle);
-        text2.x = app.screen.width / 4;
-        text2.y = 400;
+        // moveKeys
+        const moveKeys = new PIXI.Text("A, W, S, D", keysStyle);
+        moveKeys.x = app.screen.width / 12;
+        moveKeys.y = 350;
+        // moveArrow
+        const moveArrow = new PIXI.Text("->", arrowStyle);
+        moveArrow.x = app.screen.width / 4;
+        moveArrow.y = 350;
+        // moveText
+        const moveText = new PIXI.Text("Mover al fantasmita perdido", arrowStyle);
+        moveText.x = app.screen.width / 3.6;
+        moveText.y = 350;
+        // objectiveKey
+        const objectiveKey = new PIXI.Text("Objetivo", keysStyle);
+        objectiveKey.x = app.screen.width / 12;
+        objectiveKey.y = 400;
+        // objectiveArrow
+        const objectiveArrow = new PIXI.Text("->", arrowStyle);
+        objectiveArrow.x = app.screen.width / 4;
+        objectiveArrow.y = 400;
+        // objectiveText
+        const objectiveText = new PIXI.Text("Elegir los cristales emocionales que quieras, para averiguar tu identidad", arrowStyle);
+        objectiveText.x = app.screen.width / 3.6;
+        objectiveText.y = 400;
+        // finish key
+        const finishKey = new PIXI.Text("Terminar juego", keysStyle);
+        finishKey.x = app.screen.width / 12;
+        finishKey.y = 450;
+        // finishArrow
+        const finishArrow = new PIXI.Text("->", arrowStyle);
+        finishArrow.x = app.screen.width / 4;
+        finishArrow.y = 450;
+        // finishText
+        const finishText = new PIXI.Text("Entrar en el portal", arrowStyle);
+        finishText.x = app.screen.width / 3.6;
+        finishText.y = 450;
         // key to exit
-        const inst3 = new PIXI.Text("Esc", keysStyle);
-        inst3.x = app.screen.width / 12;
-        inst3.y = 450;
-        // arrow3
-        const arrow3 = new PIXI.Text("->", arrowStyle);
-        arrow3.x = app.screen.width / 5;
-        arrow3.y = 450;
-        // text3
-        const text3 = new PIXI.Text("Ir a inicio", arrowStyle);
-        text3.x = app.screen.width / 4;
-        text3.y = 450;
+        const escKey = new PIXI.Text("Esc", keysStyle);
+        escKey.x = app.screen.width / 12;
+        escKey.y = 500;
+        // escArrow
+        const escArrow = new PIXI.Text("->", arrowStyle);
+        escArrow.x = app.screen.width / 4;
+        escArrow.y = 500;
+        // escText
+        const escText = new PIXI.Text("Ir a inicio", arrowStyle);
+        escText.x = app.screen.width / 3.6;
+        escText.y = 500;
         // start game
         const subTitle = new PIXI.Text('Pulsar X para iniciar tu camino.', subtitleStyle);
-        subTitle.x = app.screen.width / 3.5;
-        subTitle.y = 550;
+        subTitle.x = app.screen.width / 4.3;
+        subTitle.y = 600;
 
         /* ADD ELEMENTS TO CONTAINERS */
         startContainer.addChild(title);
-        startContainer.addChild(ghost);
+        startContainer.addChild(ghost); 
         startContainer.addChild(instruction);
-        startContainer.addChild(inst1);
-        startContainer.addChild(arrow1);
-        startContainer.addChild(text1);
-        startContainer.addChild(inst2);
-        startContainer.addChild(arrow2);
-        startContainer.addChild(text2);
-        startContainer.addChild(inst3);
-        startContainer.addChild(arrow3);
-        startContainer.addChild(text3);
+        startContainer.addChild(moveKeys);
+        startContainer.addChild(moveArrow);
+        startContainer.addChild(moveText);
+        startContainer.addChild(objectiveKey);
+        startContainer.addChild(objectiveArrow);
+        startContainer.addChild(objectiveText);
+        startContainer.addChild(finishKey);
+        startContainer.addChild(finishArrow);
+        startContainer.addChild(finishText);
+        startContainer.addChild(escKey);
+        startContainer.addChild(escArrow);
+        startContainer.addChild(escText);
         startContainer.addChild(subTitle);
         startContainer.visible = true;
         app.stage.addChild(startContainer);
@@ -221,6 +271,80 @@
         gameContainer.addChild(enemy);
         gameContainer.visible = false;
         app.stage.addChild(gameContainer);
+
+        /* THE END ELEMENTS */
+        // title
+        const endTitle = new PIXI.Text("Has elegido este camino:", titleStyle);
+        endTitle.x = app.screen.width / 4.5;
+        endTitle.y = 30;
+        // sad
+        const sad = PIXI.Sprite.from('Personaje_jugable_1.png');
+        sad.x = app.screen.width / 12;
+        sad.y = 170;
+        sad.scale.set(0.3)
+        sad.tint = colors.SAD;
+        const sCount = new PIXI.Text("x" + sadCount, withdoutShadowStyle);
+        sCount.x = app.screen.width / 10;
+        sCount.y = 300;
+        // happy
+        const happy = PIXI.Sprite.from('Personaje_jugable_1.png');
+        happy.x = app.screen.width / 3;
+        happy.y = 170;
+        happy.scale.set(0.3)
+        happy.tint = colors.HAPPY;
+        const hCount = new PIXI.Text("x" + happyCount, withdoutShadowStyle);
+        hCount.x = app.screen.width / 2.8;
+        hCount.y = 300;
+        // disgust
+        const disgust = PIXI.Sprite.from('Personaje_jugable_1.png');
+        disgust.x = app.screen.width / 1.7;
+        disgust.y = 170;
+        disgust.scale.set(0.3)
+        disgust.tint = colors.DISGUST;
+        const dCount = new PIXI.Text("x" + disgustCount, withdoutShadowStyle);
+        dCount.x = app.screen.width / 1.63;
+        dCount.y = 300;
+        // angry
+        const angry = PIXI.Sprite.from('Personaje_jugable_1.png');
+        angry.x = app.screen.width / 1.2;
+        angry.y = 170;
+        angry.scale.set(0.3)
+        angry.tint = colors.ANGRY;
+        const aCount = new PIXI.Text("x" + angryCount, withdoutShadowStyle);
+        aCount.x = app.screen.width / 1.17;
+        aCount.y = 300;
+        // final image
+        const finalImage = PIXI.Sprite.from('Asets/x2/PJx2.png');
+        finalImage.x = app.screen.width / 6;
+        finalImage.y = 400;
+        finalImage.scale.set(0.7);
+        finalImage.tint = colors.WHITE;
+        // conclusion
+        const conclusion = new PIXI.Text('Está enfadado. Relájese :)', paragraphStyle);
+        conclusion.x = app.screen.width / 1.5;
+        conclusion.y = 400;
+        conclusion.tint = colors.WHITE;
+        // start game again
+        const startAgain = new PIXI.Text('Pulsar X o Esc para volver a inicio', subtitleStyle);
+        startAgain.x = app.screen.width / 5;
+        startAgain.y = 650;
+
+        /* ADD ELEMENTS TO END*/
+        endContainer.addChild(endTitle);
+        endContainer.addChild(sad);
+        endContainer.addChild(sCount);
+        endContainer.addChild(happy);
+        endContainer.addChild(hCount);
+        endContainer.addChild(disgust);
+        endContainer.addChild(dCount);
+        endContainer.addChild(angry);
+        endContainer.addChild(aCount);
+        endContainer.addChild(finalImage);
+        endContainer.addChild(conclusion);
+        endContainer.addChild(startAgain);
+        
+        endContainer.visible = false;
+        app.stage.addChild(endContainer);
 
         /* GAME EXECUTING */
         var pSpeed = 2
@@ -289,13 +413,36 @@
                     break;
                 case 88:    // X key   
                     //if(currentScreen == screens.START) currentScreen = screens.GAME;
-                    gameContainer.visible = true;
-                    startContainer.visible = false;
+                    if(startContainer.visible) {
+                        startContainer.visible = false;
+                        gameContainer.visible = true;
+                        endContainer.visible = false;
+                    }
+                    else if (endContainer.visible){
+                        startContainer.visible = true;
+                        gameContainer.visible = false;
+                        endContainer.visible = false;
+                    } else if(gameContainer.visible){
+                        startContainer.visible = false;
+                        gameContainer.visible = false;
+                        endContainer.visible = true;
+                    }
                     break;
                 case 27:    // Esc key
                     //if(currentScreen == screens.GAME) currentScreen = screens.START;
-                    gameContainer.visible = false;
-                    startContainer.visible = true;
+                    if(startContainer.visible) {
+                        gameContainer.visible = false;
+                        endContainer.visible = false;
+                    }
+                    else if (endContainer.visible){
+                        startContainer.visible = true;
+                        gameContainer.visible = false;
+                        endContainer.visible = false;
+                    } else if(gameContainer.visible){
+                        startContainer.visible = true;
+                        gameContainer.visible = false;
+                        endContainer.visible = false;
+                    }
             }
 
         }
