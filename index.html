@@ -7,65 +7,173 @@
 
 <body>
     <script>
-        // Create the application helper and add its render target to the page
         let app = new PIXI.Application({ width: 1280, height: 720 });
         document.body.appendChild(app.view);
-
-        // Add the 'keydown' event listener to our document
         document.addEventListener('keydown', onKeyDown, false);
 
-        /* START SCREEN */
+        /* CONTAINERS */
+        const startContainer = new PIXI.Container();
+        const instructionsContainer = new PIXI.Container();
+        const gameContainer = new PIXI.Container();
 
-        // Title
-        const title = new PIXI.Text('MY PATH', {
+        /* ENUMS */
+        const colors = {
+            DISGUST: "#fffd7e", //yellow
+            HAPPY: "#c7ffef", //cyan
+            ANGRY: "#a9ff7e", // green
+            SAD: "#ff7e7e",  //red
+            WHITE: "#ffffff",
+            BLACK: "#000000",
+            GRAY: "#d7d7d7"
+        }
+        const screens = {
+            START: "start",
+            GAME: "game",
+            END: "end"
+        }
+
+        /* SCREEN CHANGING*/
+        var currentScreen = screens.START;
+        function goToStart(){
+            startContainer.visible = true;
+            gameContainer.visible = false;
+        }
+
+        function goToGame(){
+            startContainer.visible = false;
+            gameContainer.visible = true;
+        }
+
+        switch(currentScreen){
+            case screens.START: 
+                goToStart();
+                break;
+            case screens.GAME: 
+                goToGame();
+                break;
+        }
+
+        // TEXT STYLES
+        const titleStyle = new PIXI.TextStyle({
             fontFamily: 'Courier New',
-            fontSize: 32,
+            fontSize: 48,
             fontStyle: 'italic',
             fontWeight: 'bold',
-            fill: ['#ffffff', '#000000'], // gradient
-            stroke: '#FFFF',
+            fill: [colors.WHITE, colors.BLACK], // gradient
+            stroke: colors.WHITE,
             strokeThickness: 5,
             dropShadow: true,
-            dropShadowColor: '#c7ffef',
+            dropShadowColor: colors.HAPPY,
             dropShadowBlur: 4,
             dropShadowAngle: Math.PI / 6,
             dropShadowDistance: 6,
-            wordWrap: true,
-            wordWrapWidth: 440,
-            lineJoin: 'round',
         });
-        title.x = app.screen.width / 2.5;
-        title.y = 30;
-        app.stage.addChild(title);
-
-        // Subtitle
-        const subTitle = new PIXI.Text('Please, press X to start.', {
+        const subtitleStyle = new PIXI.TextStyle({
+            fontFamily: 'Courier New',
+            fontSize: 36,
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            fill: [colors.WHITE, colors.GRAY], // gradient
+            stroke: colors.BLACK,
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: colors.ANGRY,
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 6,
+        });
+        const keysStyle = new PIXI.TextStyle({
             fontFamily: 'Courier New',
             fontSize: 20,
             fontStyle: 'italic',
             fontWeight: 'bold',
-            fill: ['#ffffff', '#d7d7d7'], // gradient
-            stroke: '#0000',
+            fill: [colors.BLACK], // gradient
+            stroke: colors.SAD,
             strokeThickness: 5,
-            dropShadow: true,
-            dropShadowColor: '#c7ffef',
-            dropShadowBlur: 4,
-            dropShadowAngle: Math.PI / 6,
-            dropShadowDistance: 6,
-            wordWrap: true,
-            wordWrapWidth: 440,
-            lineJoin: 'round',
         });
+
+        const arrowStyle = new PIXI.TextStyle({
+            fontFamily: 'Courier New',
+            fontSize: 20,
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            fill: [colors.BLACK], // gradient
+            stroke: colors.DISGUST,
+            strokeThickness: 5,
+        });
+
+        /* START ELEMENTS */
+        // game name
+        const title = new PIXI.Text('MY PATH', titleStyle);
+        title.x = app.screen.width / 2.5;
+        title.y = 30;
+        // character
+        const ghost = PIXI.Sprite.from('bunny.png');
+        ghost.x = app.screen.width / 2.1;
+        ghost.y = 160;
+        // instructions title
+        const instruction = new PIXI.Text("Instrucciones", titleStyle);
+        instruction.x = app.screen.width / 3;
+        instruction.y = 265;
+        // keys to move
+        const inst1 = new PIXI.Text("A, W, S, D", keysStyle);
+        inst1.x =  app.screen.width / 12;
+        inst1.y = 350;
+        // arrow1
+        const arrow1 = new PIXI.Text("->", arrowStyle);
+        arrow1.x = app.screen.width / 5;
+        arrow1.y = 350;
+        // text1
+        const text1 = new PIXI.Text("Mover al fantasmita perdido", arrowStyle);
+        text1.x = app.screen.width / 4;
+        text1.y = 350;
+        // game objective
+        const inst2 = new PIXI.Text("Objetivo", keysStyle);
+        inst2.x =  app.screen.width / 12;
+        inst2.y = 400;
+        // arrow2
+        const arrow2 = new PIXI.Text("->", arrowStyle);
+        arrow2.x = app.screen.width / 5;
+        arrow2.y = 400;
+        // text2
+        const text2 = new PIXI.Text("Elige los cristales emocionales que quieras para averiguar tu identidad", arrowStyle);
+        text2.x = app.screen.width / 4;
+        text2.y = 400;
+        // key to exit
+        const inst3 = new PIXI.Text("Esc", keysStyle);
+        inst3.x =  app.screen.width / 12;
+        inst3.y = 450;
+        // arrow3
+        const arrow3 = new PIXI.Text("->", arrowStyle);
+        arrow3.x = app.screen.width / 5;
+        arrow3.y = 450;
+        // text3
+        const text3 = new PIXI.Text("Ir a inicio", arrowStyle);
+        text3.x = app.screen.width / 4;
+        text3.y = 450;
+        // start game
+        const subTitle = new PIXI.Text('Pulsar X para iniciar tu camino.', subtitleStyle);
         subTitle.x = app.screen.width / 3.5;
-        subTitle.y = 180;
-        app.stage.addChild(subTitle);
+        subTitle.y = 550;
+        
+        /* ADD ELEMENTS TO CONTAINERS */
+        startContainer.addChild(title);
+        startContainer.addChild(ghost);
+        startContainer.addChild(instruction);
+        startContainer.addChild(inst1);
+        startContainer.addChild(arrow1);
+        startContainer.addChild(text1);
+        startContainer.addChild(inst2);
+        startContainer.addChild(arrow2);
+        startContainer.addChild(text2);
+        startContainer.addChild(inst3);
+        startContainer.addChild(arrow3);
+        startContainer.addChild(text3);
+        startContainer.addChild(subTitle);
+        startContainer.visible = true;
+        app.stage.addChild(startContainer);
 
-
-        /* INSTRUCTIONS SCREEN */
-
-        /* GAME SCREEN */
-
-        // Load required assets 
+        /* GAME ELEMENTS */
         let player = PIXI.Sprite.from('bunny.png');
         let enemy  = PIXI.Sprite.from('bunny.png');
         let dsert1 = PIXI.Sprite.from('dsert1x1.png');
@@ -74,16 +182,17 @@
         let dsert4 = PIXI.Sprite.from('dsert1x1.png');
         let dsert5 = PIXI.Sprite.from('dsert1x1.png');
         let dsert6 = PIXI.Sprite.from('dsert1x1.png');
-
         enemy.y = 100
         dsert1.y = 500
 
-        // Adding to screen
-        app.stage.addChild(player);
-        app.stage.addChild(enemy);
-        app.stage.addChild(dsert1);
+        // ADD ELEMENTS TO GAME CONTAINER
+        gameContainer.addChild(player);
+        gameContainer.addChild(enemy);
+        gameContainer.addChild(dsert1);
+        gameContainer.visible = false;
+        app.stage.addChild(gameContainer);
 
-        // Game executing
+        /* GAME EXECUTING */
         var pSpeed = 2
         var moveY = 0;
         var moveX = 0;
@@ -129,9 +238,11 @@
                 case 39:    // Right arrow key
                     moveX = pSpeed;
                     break;
-                case 88:    // X key
-                    //start screen no visibles.
+                case 88:    // X key   
+                    if(currentScreen == screens.START) currentScreen = screens.GAME;
                     break;
+                case 27:    // Esc key
+                    if(currentScreen == screens.GAME) currentScreen = screens.START;
             }
 
         }
