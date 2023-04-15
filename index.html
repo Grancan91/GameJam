@@ -1,13 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./scripts.js" defer></script>
-    <title>Document</title>
+    <script src="https://pixijs.download/release/pixi.min.js"></script>
 </head>
+
 <body>
-    
+    <script>
+        // Create the application helper and add its render target to the page
+        let app = new PIXI.Application({ width: 640, height: 360 });
+        document.body.appendChild(app.view);
+
+        // Add the 'keydown' event listener to our document
+        document.addEventListener('keydown', onKeyDown);
+
+        //Load required assets 
+        let sprite = PIXI.Sprite.from('bunny.png');
+
+        //Add assets to stage (example)
+        app.stage.addChild(sprite);
+
+        // Add a ticker callback to move the sprite back and forth
+        let elapsed = 0.0;
+        app.ticker.add((delta) => {
+            update(delta);
+        });
+
+
+        function update(delta){
+            elapsed += delta;
+            console.log(sprite.y)
+        }
+
+        function onKeyDown(key) {
+            console.log("EO")
+                // W Key is 87
+                // Up arrow is 87
+                if (key.keyCode === 87 || key.keyCode === 38) {
+                    sprite.y -= 1
+                }
+
+        
+                // S Key is 83
+                // Down arrow is 40
+                if (key.keyCode === 83 || key.keyCode === 40) {
+                    
+                }
+
+                // A Key is 65
+                // Left arrow is 37
+                if (key.keyCode === 65 || key.keyCode === 37) {
+                
+                }
+
+                // D Key is 68
+                // Right arrow is 39
+                if (key.keyCode === 68 || key.keyCode === 39) {
+                
+                }
+            }
+    </script>
 </body>
+
 </html>
