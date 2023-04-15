@@ -8,7 +8,7 @@
 <body>
     <script>
         // Create the application helper and add its render target to the page
-        let app = new PIXI.Application({ width: 1920, height: 1080 });
+        let app = new PIXI.Application({ width: 1280, height: 720 });
         document.body.appendChild(app.view);
 
         // Add the 'keydown' event listener to our document
@@ -18,12 +18,17 @@
         let player = PIXI.Sprite.from('bunny.png');
         let enemy = PIXI.Sprite.from('bunny.png');
         let dsert1 = PIXI.Sprite.from('dsert1x1.png');
+        let dsert2 = PIXI.Sprite.from('dsert2x1.png');
+        let dsert3 = PIXI.Sprite.from('dsert1x1.png');
+        let dsert4 = PIXI.Sprite.from('dsert1x1.png');
+        let dsert5 = PIXI.Sprite.from('dsert1x1.png');
+        let dsert6 = PIXI.Sprite.from('dsert1x1.png');
+        
 
 
        enemy.y = 100
-       dsert1.y = 300
-       dsert1.width= 400
-       dsert1.height=500
+       dsert1.y = 500
+
 
         var pSpeed = 2
         var moveY=0;
