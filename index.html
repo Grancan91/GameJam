@@ -15,28 +15,62 @@
         document.addEventListener('keydown', onKeyDown, false);
 
         //Load required assets 
-        let player = PIXI.Sprite.from('bunny.png');
+ 
+        let player = PIXI.Sprite.from('Personaje_jugable_1.png');
         let enemy = PIXI.Sprite.from('bunny.png');
-        let dsert1 = PIXI.Sprite.from('dsert1x1.png');
-        let dsert2 = PIXI.Sprite.from('dsert2x1.png');
-        let dsert3 = PIXI.Sprite.from('dsert1x1.png');
-        let dsert4 = PIXI.Sprite.from('dsert1x1.png');
-        let dsert5 = PIXI.Sprite.from('dsert1x1.png');
-        let dsert6 = PIXI.Sprite.from('dsert1x1.png');
+        let suelo = PIXI.Sprite.from('Suelo.png');
+        let dsert1 = PIXI.Sprite.from('Duna_01.png');
+        let dsert2 = PIXI.Sprite.from('Duna_02.png');
+        let dsert3 = PIXI.Sprite.from('Duna_03.png');
+        let dsert4 = PIXI.Sprite.from('Duna_fondo_01.png');
+        let dsert5 = PIXI.Sprite.from('Duna_fondo_02.png');
+        let dsert6 = PIXI.Sprite.from('Duna_fondo_03.png');
+        let obelisc = PIXI.Sprite.from('Orbe.png');
+       // let obeliscAnimation = PIXI.Sprite.from('Fondo_animado_Orbe.png');
+    
         
 
+       // player.tint = 0x252525
 
-       enemy.y = 100
-       dsert1.y = 500
+        enemy.y = 100
 
+        obelisc.x = 750
+        //obeliscAnimation.x = 750
+
+        suelo.y =  650
+        dsert1.y = 550
+        dsert2.y = 550
+        dsert3.y = 550
+        dsert4.y = 500
+        dsert5.y = 500
+
+        dsert1.x = 100
+        dsert2.x = 1000
+        dsert3.x = 1800
+        dsert4.x = 100
+        dsert5.x = 400
+        dsert6.x = 800
+    
 
         var pSpeed = 2
+        var wSpeed1 = 2
+        var wSpeed2 = 1
+
         var moveY=0;
         var moveX=0;
         //Add assets to stage (example)
+        app.stage.addChild(suelo);
+        app.stage.addChild(dsert4);
+        app.stage.addChild(dsert5);
+        app.stage.addChild(dsert6);
+        app.stage.addChild(dsert1);
+        app.stage.addChild(dsert2);
+        app.stage.addChild(dsert3);
+        app.stage.addChild(obelisc);
+        //app.stage.addChild(obeliscAnimation);
+
         app.stage.addChild(player);
         app.stage.addChild(enemy);
-        app.stage.addChild(dsert1);
 
         // Add a ticker callback to move the sprite back and forth
         let elapsed = 0.0;
@@ -49,9 +83,26 @@
             elapsed += delta;
             player.y += moveY
             player.x += moveX
+            dsert1.x -= wSpeed1
+            dsert2.x -= wSpeed1
+            dsert3.x -= wSpeed1
+            dsert4.x -= wSpeed2
+            dsert5.x -= wSpeed2
+            dsert6.x -= wSpeed2
+
+            outMap(dsert1)
+            outMap(dsert2)
+            outMap(dsert3)
+            outMapWall(dsert4)
+            outMapWall(dsert5)
+            outMapWall(dsert6)
+
             moveX *= 0.99
             moveY *= 0.99
             console.log(moveX)
+
+
+
 
             if(hitTestRectangle(player,enemy)){
                 console.log("Colision")
@@ -146,7 +197,19 @@
                     return hit;
                 };
 
+            function outMap(spr){
+                if(spr.x <= -1420){
+                    spr.x = 850
+                  return console.log(spr.x)
+                }
+            }
 
+             function outMapWall(spr) {
+                    if (spr.x <= -1420) {
+                        spr.x = 850
+                        return console.log(spr.x)
+                    }
+                }
 
     </script>
 </body>
