@@ -14,11 +14,58 @@
         // Add the 'keydown' event listener to our document
         document.addEventListener('keydown', onKeyDown);
 
-        //Load required assets 
+        // Title
+        const   style = new PIXI.TextStyle({
+            fontFamily: 'Courier New',
+            fontSize: 32,
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            fill: ['#ffffff', '#000000'], // gradient
+            stroke: '#FFFF',
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: '#c7ffef',
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 6,
+            wordWrap: true,
+            wordWrapWidth: 440,
+            lineJoin: 'round',
+        });
+        const title = new PIXI.Text('MY PATH', style);
+        title.x = app.screen.width / 2.5;
+        title.y = 30;
+        app.stage.addChild(title);
+ 
+        // Main character
         let sprite = PIXI.Sprite.from('bunny.png');
-
-        //Add assets to stage (example)
+        sprite.anchor.set(0.5);
+        sprite.x = app.screen.width / 2;
+        sprite.y = 130;
         app.stage.addChild(sprite);
+
+         // Title
+         const subtitleStyle = new PIXI.TextStyle({
+            fontFamily: 'Courier New',
+            fontSize: 20,
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            fill: ['#ffffff', '#d7d7d7'], // gradient
+            stroke: '#0000',
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: '#c7ffef',
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 6,
+            wordWrap: true,
+            wordWrapWidth: 440,
+            lineJoin: 'round',
+        });
+        const subTitle = new PIXI.Text('Please, press X to start.', subtitleStyle);
+        subTitle.x = app.screen.width / 3.5;
+        subTitle.y = 180;
+        app.stage.addChild(subTitle);
 
         // Add a ticker callback to move the sprite back and forth
         let elapsed = 0.0;
@@ -27,38 +74,38 @@
         });
 
 
-        function update(delta){
+        function update(delta) {
             elapsed += delta;
             console.log(sprite.y)
         }
 
         function onKeyDown(key) {
             console.log("EO")
-                // W Key is 87
-                // Up arrow is 87
-                if (key.keyCode === 87 || key.keyCode === 38) {
-                    sprite.y -= 1
-                }
-
-        
-                // S Key is 83
-                // Down arrow is 40
-                if (key.keyCode === 83 || key.keyCode === 40) {
-                    
-                }
-
-                // A Key is 65
-                // Left arrow is 37
-                if (key.keyCode === 65 || key.keyCode === 37) {
-                
-                }
-
-                // D Key is 68
-                // Right arrow is 39
-                if (key.keyCode === 68 || key.keyCode === 39) {
-                
-                }
+            // W Key is 87
+            // Up arrow is 87
+            if (key.keyCode === 87 || key.keyCode === 38) {
+                sprite.y -= 1
             }
+
+
+            // S Key is 83
+            // Down arrow is 40
+            if (key.keyCode === 83 || key.keyCode === 40) {
+
+            }
+
+            // A Key is 65
+            // Left arrow is 37
+            if (key.keyCode === 65 || key.keyCode === 37) {
+
+            }
+
+            // D Key is 68
+            // Right arrow is 39
+            if (key.keyCode === 68 || key.keyCode === 39) {
+
+            }
+        }
     </script>
 </body>
 
