@@ -14,8 +14,10 @@
         // Add the 'keydown' event listener to our document
         document.addEventListener('keydown', onKeyDown);
 
+        /* START SCREEN */
+
         // Title
-        const   style = new PIXI.TextStyle({
+        const title = new PIXI.Text('MY PATH', {
             fontFamily: 'Courier New',
             fontSize: 32,
             fontStyle: 'italic',
@@ -32,7 +34,6 @@
             wordWrapWidth: 440,
             lineJoin: 'round',
         });
-        const title = new PIXI.Text('MY PATH', style);
         title.x = app.screen.width / 2.5;
         title.y = 30;
         app.stage.addChild(title);
@@ -44,8 +45,8 @@
         sprite.y = 130;
         app.stage.addChild(sprite);
 
-         // Title
-         const subtitleStyle = new PIXI.TextStyle({
+        // subtitle
+        const subTitle = new PIXI.Text('Please, press X to start.', {
             fontFamily: 'Courier New',
             fontSize: 20,
             fontStyle: 'italic',
@@ -62,17 +63,24 @@
             wordWrapWidth: 440,
             lineJoin: 'round',
         });
-        const subTitle = new PIXI.Text('Please, press X to start.', subtitleStyle);
         subTitle.x = app.screen.width / 3.5;
         subTitle.y = 180;
         app.stage.addChild(subTitle);
+
+        // Button X to start function
+        function start(){
+            
+        }
+
+        /* INSTRUCTIONS SCREEN */
+
+        /* GAME SCREEN */
 
         // Add a ticker callback to move the sprite back and forth
         let elapsed = 0.0;
         app.ticker.add((delta) => {
             update(delta);
         });
-
 
         function update(delta) {
             elapsed += delta;
@@ -106,6 +114,10 @@
 
             }
         }
+
+        /* THE END SCREEN*/
+        // todo
+
     </script>
 </body>
 
