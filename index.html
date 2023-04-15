@@ -33,7 +33,7 @@
         }
 
         /* SCREEN CHANGING*/
-        var currentScreen = screens.START;
+        /* var currentScreen = screens.START;
         function goToStart(){
             startContainer.visible = true;
             gameContainer.visible = false;
@@ -51,7 +51,7 @@
             case screens.GAME: 
                 goToGame();
                 break;
-        }
+        } */
 
         // TEXT STYLES
         const titleStyle = new PIXI.TextStyle({
@@ -211,7 +211,7 @@
             console.log(moveX)
 
             if (hitTestRectangle(player, enemy)) {
-                console.log("Colision")
+                console.log("Collision")
                 moveY = 0
                 moveX = 0
             } else {
@@ -239,10 +239,14 @@
                     moveX = pSpeed;
                     break;
                 case 88:    // X key   
-                    if(currentScreen == screens.START) currentScreen = screens.GAME;
+                    //if(currentScreen == screens.START) currentScreen = screens.GAME;
+                    gameContainer.visible = true;
+                    startContainer.visible = false;
                     break;
                 case 27:    // Esc key
-                    if(currentScreen == screens.GAME) currentScreen = screens.START;
+                    //if(currentScreen == screens.GAME) currentScreen = screens.START;
+                    gameContainer.visible = false;
+                    startContainer.visible = true;
             }
 
         }
