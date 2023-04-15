@@ -8,11 +8,11 @@
 <body>
     <script>
         // Create the application helper and add its render target to the page
-        let app = new PIXI.Application({ width: 640, height: 360 });
+        let app = new PIXI.Application({ width: 1280, height: 720 });
         document.body.appendChild(app.view);
 
         // Add the 'keydown' event listener to our document
-        document.addEventListener('keydown', onKeyDown);
+        document.addEventListener('keydown', onKeyDown, false);
 
         /* START SCREEN */
 
@@ -37,13 +37,6 @@
         title.x = app.screen.width / 2.5;
         title.y = 30;
         app.stage.addChild(title);
- 
-        // Main character
-        let sprite = PIXI.Sprite.from('bunny.png');
-        sprite.anchor.set(0.5);
-        sprite.x = app.screen.width / 2;
-        sprite.y = 130;
-        app.stage.addChild(sprite);
 
         // subtitle
         const subTitle = new PIXI.Text('Please, press X to start.', {
@@ -67,16 +60,12 @@
         subTitle.y = 180;
         app.stage.addChild(subTitle);
 
-        // Button X to start function
-        function start(){
-            
-        }
 
         /* INSTRUCTIONS SCREEN */
 
-        /* GAME SCREEN */
-
-        // Add a ticker callback to move the sprite back and forth
+        /* GAME SCREEN */        
+        
+        // Game executing
         let elapsed = 0.0;
         app.ticker.add((delta) => {
             update(delta);
@@ -84,39 +73,88 @@
 
         function update(delta) {
             elapsed += delta;
-            console.log(sprite.y)
+            player.y += moveY
+            player.x += moveX
+            moveX *= 0.99
+            moveY *= 0.99
+            console.log(moveX)
+
+            if (hitTestRectangle(player, enemy)) {
+                console.log("Colision")
+                moveY = 0
+                moveX = 0
+            } else {
+                console.log("Not Collision")
+            }
+
         }
 
+        // Movement
         function onKeyDown(key) {
-            console.log("EO")
-            // W Key is 87
-            // Up arrow is 87
-            if (key.keyCode === 87 || key.keyCode === 38) {
-                sprite.y -= 1
+            switch(key.keyCode){
+                case 87:    // W key
+                case 38:    // Up arrow key 
+                    moveY = -pSpeed;
+                    break;
+                case 83:    // S key
+                case 40:    // Down arrow key
+                    moveY = pSpeed;
+                    break;
+                case 65:    // A key
+                case 37:    // Left arrow key
+                    moveX = -pSpeed;
+                    break;
+                case 68:    // D key
+                case 39:    // Right arrow key
+                    moveX = pSpeed;
+                    break;
+                case 88:    // X key
+                    //start screen no visibles.
+                    break;
             }
 
-
-            // S Key is 83
-            // Down arrow is 40
-            if (key.keyCode === 83 || key.keyCode === 40) {
-
-            }
-
-            // A Key is 65
-            // Left arrow is 37
-            if (key.keyCode === 65 || key.keyCode === 37) {
-
-            }
-
-            // D Key is 68
-            // Right arrow is 39
-            if (key.keyCode === 68 || key.keyCode === 39) {
-
-            }
         }
 
-        /* THE END SCREEN*/
-        // todo
+        // Collisions
+        function hitTestRectangle(r1, r2) {
+            //Define the variables we'll need to calculate
+            let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+            //hit will determine whether there's a collision
+            hit = false;
+            //Find the center points of each sprite
+            r1.centerX = r1.x + r1.width / 2;
+            r1.centerY = r1.y + r1.height / 2;
+            r2.centerX = r2.x + r2.width / 2;
+            r2.centerY = r2.y + r2.height / 2;
+            //Find the half-widths and half-heights of each sprite
+            r1.halfWidth = r1.width / 2;
+            r1.halfHeight = r1.height / 2;
+            r2.halfWidth = r2.width / 2;
+            r2.halfHeight = r2.height / 2;
+            //Calculate the distance vector between the sprites
+            vx = r1.centerX - r2.centerX;
+            vy = r1.centerY - r2.centerY;
+            //Figure out the combined half-widths and half-heights
+            combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+            combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+            //Check for a collision on the x axis
+            if (Math.abs(vx) < combinedHalfWidths) {
+                //A collision might be occurring. Check for a collision on the y axis
+                if (Math.abs(vy) < combinedHalfHeights) {
+                    //There's definitely a collision happening
+                    hit = true;
+                } else {
+                    //There's no collision on the y axis
+                    hit = false;
+                }
+            } else {
+                //There's no collision on the x axis
+                hit = false;
+            }
+            //`hit` will be either `true` or `false`
+            return hit;
+        };
+
 
     </script>
 </body>
