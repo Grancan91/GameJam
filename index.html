@@ -412,6 +412,10 @@
         var moveY = 0;
         var moveX = 0;
 
+
+
+
+
         let elapsed = 0.0;
         app.ticker.add((delta) => {
             update(delta);
@@ -621,7 +625,7 @@
 
 
         function cristalReSpawn(spr) {
-            let arrRandomX = [1300, 1400, 1500, 1600, 1800, 2000, 2200, 2400]
+            let arrRandomX = [1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000]
             if (spr.x <= -1320) {
 
                 spr.tint = arr_colors[Math.floor(Math.random() * 4)]
