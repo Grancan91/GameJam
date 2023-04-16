@@ -12,10 +12,10 @@
         document.addEventListener('keydown', onKeyDown, false);
 
         /* IMPORTANT VARIABLES */
-        const sadCount = 0;
-        const angryCount = 0;
-        const happyCount = 0;
-        const disgustCount = 0;
+        let sadCount = 0;
+        let angryCount = 0;
+        let happyCount = 0;
+        let disgustCount = 0;
 
         /* CONTAINERS */
         const startContainer = new PIXI.Container();
@@ -38,25 +38,40 @@
             GAME: "game",
             END: "end"
         }
-        /* ARRAY Colors*/
+        /* ARRAYS*/
         const arr_colors = [colors.DISGUST, colors.HAPPY, colors.ANGRY, colors.SAD]
+        const ghostSpawn = ['SPAWN01.png', 'SPAWN02.png', 'SPAWN03.png', 'SPAWN04.png', 'SPAWN05.png', 'SPAWN06.png', 'SPAWN07.png'];
+
         /* SCREEN CHANGING*/
-        /* var currentScreen = screens.START;
-        function goToStart(){
+        function goToStart() {
             startContainer.visible = true;
             gameContainer.visible = false;
+            endContainer.visible = false;
+            backg.visible = true;
         }
 
-        function goToGame(){
+        function goToGame() {
             startContainer.visible = false;
             gameContainer.visible = true;
+            endContainer.visible = false;
+            backg.visible = false;
         }
 
-        switch(currentScreen){
-            case screens.START: 
+        function goToEnd() {
+            startContainer.visible = false;
+            gameContainer.visible = false;
+            endContainer.visible = true;
+            backg.visible = true;
+        }
+
+        /* 
+        //change screens with states instead of booleans
+        var currentScreen = screens.START;
+        switch (currentScreen) {
+            case screens.START:
                 goToStart();
                 break;
-            case screens.GAME: 
+            case screens.GAME:
                 goToGame();
                 break;
         } */
@@ -133,11 +148,8 @@
         });
 
         /* BACKGROUND */
-        //const texture = new PIXI.Texture('background.jpeg');
-        /* texture.width = 1280;
-        texture.height = 720; */
-        const background = PIXI.Sprite.from('background.jpeg');
-        backg.addChild(background);
+        const bkg = PIXI.Sprite.from('background.jpeg');
+        backg.addChild(bkg);
         app.stage.addChild(backg);
 
         /* START ELEMENTS */
@@ -146,30 +158,11 @@
         title.x = app.screen.width / 2.5;
         title.y = 30;
         // character
-        const ghostSpawn = [
-            'SPAWN01.png',
-            'SPAWN02.png',
-            'SPAWN03.png',
-            'SPAWN04.png',
-            'SPAWN05.png',
-            'SPAWN06.png',
-            'SPAWN07.png',
-        ];
-        const textureArray = [];
-
-        for (let i = 0; i < ghostSpawn.length-1; i++) {
-            const texture = PIXI.Texture.from(ghostSpawn[i]);
-            textureArray.push(texture);
-        }
-        const animatedSprite = new PIXI.AnimatedSprite(textureArray, true);
-        animatedSprite.animationSpeed = 0.1;
-        animatedSprite.play();
-        app.stage.addChild(animatedSprite);
-
-        //const ghost = PIXI.Sprite.from('Personaje_jugable_1.png');
-       /*  ghost.x = app.screen.width / 2.3;
-        ghost.y = 100;
-        ghost.scale.set(0.4) */
+        const spawnGhost = animate(ghostSpawn, 0.1);
+        spawnGhost.x = app.screen.width / 2.3;
+        spawnGhost.y = 100;
+        spawnGhost.scale.set(0.4)
+        startContainer.addChild(spawnGhost);
         // instructions title
         const instruction = new PIXI.Text("Instrucciones", titleStyle);
         instruction.x = app.screen.width / 3;
@@ -244,12 +237,12 @@
         startContainer.addChild(escArrow);
         startContainer.addChild(escText);
         startContainer.addChild(subTitle);
-        startContainer.visible = false;
+        startContainer.visible = true;
         app.stage.addChild(startContainer);
 
         /* GAME ELEMENTS */
         let player = PIXI.Sprite.from('Personaje_jugable_1.png');
-        let enemy = PIXI.Sprite.from('bunny.png');
+        let enemy = PIXI.Sprite.from('Personaje_jugable_1.png');
         let cristal1 = PIXI.Sprite.from('Cristal_diamante.png');
         let cristal2 = PIXI.Sprite.from('Cristal_pentagono.png');
         let cristal3 = PIXI.Sprite.from('Cristal_Redondo.png');
@@ -265,7 +258,7 @@
         let dsert3 = PIXI.Sprite.from('Duna_03.png');
         let dsert4 = PIXI.Sprite.from('Duna_fondo_01.png');
         let dsert5 = PIXI.Sprite.from('Duna_fondo_02.png');
-        let dsert6 = PIXI.Sprite.from('Duna_fondo_03.png');
+        //let dsert6 = PIXI.Sprite.from('Duna_fondo_03.png');
         let obelisc = PIXI.Sprite.from('Orbe.png');
         let obelisc2 = PIXI.Sprite.from('Fondo_animado_Orbe.png');
         let obeliscEnd = PIXI.Sprite.from('Cristal_Reinicio.png');
@@ -274,8 +267,8 @@
         // let obeliscAnimation = PIXI.Sprite.from('Fondo_animado_Orbe.png');
         enemy.y = 100
 
-        let arrSprites = [dsert1,dsert2,dsert3,dsert4,dsert5,dsert6]
-        
+        let arrSprites = [dsert1, dsert2, dsert3, dsert4, dsert5, dsert6]
+
         cristal1.x = 1300
         cristal2.x = 1500
         cristal3.x = 1700
@@ -285,7 +278,7 @@
         cristal7.x = 2600
         cristal8.x = 2800
 
-           // Y -> Min: 600
+        // Y -> Min: 600
 
         cristal1.y = 500
         cristal2.y = 350
@@ -305,18 +298,18 @@
         cristal7.tint = arr_colors[Math.round(Math.random() * 3)]
         cristal8.tint = arr_colors[Math.round(Math.random() * 3)]
 
-        
-        
+
+
 
         // player.tint = 0x252525
-       // obelisc.scale.set(0.7,0.7);
+        // obelisc.scale.set(0.7,0.7);
         obelisc.x = 900
         obelisc2.x = 900
         obeliscEnd.x = 1010
         obeliscEnd.y = 280
         obeliscEnd.visible = true
         //obeliscEnd.scale.set(0.7, 0.7);
-       // obelisc.y = 0
+        // obelisc.y = 0
         //obeliscAnimation.x = 750
 
 
@@ -324,7 +317,7 @@
         const altura = 622
         const altura2 = 560
 
-        suelo.y =  659
+        suelo.y = 659
         suelo2.y = 687
         dsert1.y = altura
         dsert2.y = altura
@@ -340,7 +333,7 @@
         dsert5.x = 2500
         dsert6.x = 4000
 
-     
+
 
         // ADD ELEMENTS TO GAME CONTAINER
         gameContainer.addChild(background);
@@ -348,7 +341,7 @@
         gameContainer.addChild(dsert4);
         gameContainer.addChild(dsert5);
         gameContainer.addChild(dsert6);
-       
+
         gameContainer.addChild(obelisc2);
         gameContainer.addChild(obelisc);
         gameContainer.addChild(obeliscEnd);
@@ -356,8 +349,8 @@
         gameContainer.addChild(dsert1);
         gameContainer.addChild(dsert2);
         gameContainer.addChild(dsert3);
-        
-       
+
+
         //gameContainer.addChild(obeliscAnimation);
         gameContainer.addChild(player);
         gameContainer.addChild(cristal1);
@@ -369,7 +362,7 @@
         gameContainer.addChild(cristal7);
         gameContainer.addChild(cristal8);
         gameContainer.addChild(enemy);
-        gameContainer.visible = true;
+        gameContainer.visible = false;
         app.stage.addChild(gameContainer);
 
         /* THE END ELEMENTS */
@@ -447,11 +440,6 @@
         app.stage.addChild(endContainer);
 
         /* GAME EXECUTING */
-        
-        var disgust = 0
-        var happy = 0
-        var angry = 0
-        var sad = 0
         var pSpeed = 4.5
         var moveY = 0;
         var moveX = 0;
@@ -467,7 +455,7 @@
         });
 
 
-        
+
         function update(delta) {
             elapsed += delta;
             player.y += moveY
@@ -483,30 +471,30 @@
             //Cristales Respaw
             cristal1.x -= 5
             cristalReSpawn(cristal1)
-            cristalCollision(player,cristal1)
-              cristal2.x -= 5
+            cristalCollision(player, cristal1)
+            cristal2.x -= 5
             cristalReSpawn(cristal2)
-              cristalCollision(player, cristal2)
-              cristal3.x -= 5
+            cristalCollision(player, cristal2)
+            cristal3.x -= 5
             cristalReSpawn(cristal3)
-              cristalCollision(player, cristal3)
-              cristal4.x -= 5
+            cristalCollision(player, cristal3)
+            cristal4.x -= 5
             cristalReSpawn(cristal4)
-              cristalCollision(player, cristal4)
-             cristal5.x -= 5
+            cristalCollision(player, cristal4)
+            cristal5.x -= 5
             cristalReSpawn(cristal5)
-             cristalCollision(player, cristal5)
-             cristal6.x -= 5
+            cristalCollision(player, cristal5)
+            cristal6.x -= 5
             cristalReSpawn(cristal6)
             cristalCollision(player, cristal6)
-             cristal7.x -= 5
+            cristal7.x -= 5
             cristalReSpawn(cristal7)
             cristalCollision(player, cristal7)
-             cristal8.x -= 5
+            cristal8.x -= 5
             cristalReSpawn(cristal8)
             cristalCollision(player, cristal8)
 
-            
+
             obeliscEnd.rotation += 0.05
             obeliscEnd.pivot.set(obeliscEnd.width / 2, obeliscEnd.height / 2);
 
@@ -524,7 +512,7 @@
             nextLevel(player, obeliscEnd)
 
             if (hitTestRectangle(player, enemy)) {
-               // console.log("Collision")
+                // console.log("Collision")
                 moveY = 0
                 moveX = 0
             } else {
@@ -552,40 +540,11 @@
                     moveX = pSpeed;
                     break;
                 case 88:    // X key   
-                    //if(currentScreen == screens.START) currentScreen = screens.GAME;
-                    if (startContainer.visible) {
-                        startContainer.visible = false;
-                        gameContainer.visible = true;
-                        endContainer.visible = false;
-                        backg.visible = false;
-                    }
-                    else if (endContainer.visible) {
-                        startContainer.visible = true;
-                        gameContainer.visible = false;
-                        endContainer.visible = false;
-                        backg.visible = true;
-                    } else if (gameContainer.visible) {
-                        startContainer.visible = false;
-                        gameContainer.visible = false;
-                        endContainer.visible = true;
-                        backg.visible = true;
-                    }
-                    break;
                 case 27:    // Esc key
                     //if(currentScreen == screens.GAME) currentScreen = screens.START;
-                    if (startContainer.visible) {
-                        gameContainer.visible = false;
-                        endContainer.visible = false;
-                    }
-                    else if (endContainer.visible) {
-                        startContainer.visible = true;
-                        gameContainer.visible = false;
-                        endContainer.visible = false;
-                    } else if (gameContainer.visible) {
-                        startContainer.visible = true;
-                        gameContainer.visible = false;
-                        endContainer.visible = false;
-                    }
+                    if (startContainer.visible) goToGame();
+                    else if (endContainer.visible) goToStart();
+                    else if (gameContainer.visible) goToEnd();
             }
 
         }
@@ -633,7 +592,7 @@
         function outMap(spr) {
             if (spr.x <= -1420) {
                 spr.x = 1420
-               // return console.log(spr.x)
+                // return console.log(spr.x)
             }
         }
         function outMapWall(spr) {
@@ -643,94 +602,101 @@
             }
         }
 
-          function orbAnimation(spr) {
-                if (spr.y <= -3200) {
-                    spr.y = 0
-                    //return spr.x
-                }
+        function orbAnimation(spr) {
+            if (spr.y <= -3200) {
+                spr.y = 0
+                //return spr.x
             }
+        }
 
-              function getRandomArbitrary(min, max) {
-                    return Math.random() * (max - min) + min;
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+
+        function cristalReSpawn(spr) {
+            let arrRandomX = [1300, 1400, 1500, 1600, 1800, 2000, 2200, 2400]
+            if (spr.x <= -1320) {
+
+                spr.tint = arr_colors[Math.round(Math.random() * 3)]
+                spr.x = arrRandomX[Math.round(Math.random() * 7)]
+
+                if (!spr.visible) {
+                    spr.visible = true
                 }
-
-
-            function cristalReSpawn(spr){
-                let arrRandomX = [1300,1400,1500,1600,1800,2000,2200,2400]
-                if (spr.x <= -1320) {
-                    
-                    spr.tint = arr_colors[Math.round(Math.random() * 3)]
-                    spr.x = arrRandomX[Math.round(Math.random()*7)]
-                    
-                    if(!spr.visible){
-                        spr.visible = true
-                    }
-                    //console.log(`New X of ${spr} = ${spr.x}`)
-                   // return console.log(spr.x)
-                }
+                //console.log(`New X of ${spr} = ${spr.x}`)
+                // return console.log(spr.x)
             }
+        }
 
-            function cristalCollision(player, cristal){
-                if (hitTestRectangle(player, cristal)){
-                   // console.log(`player a chocado con ${happy}`)
-                    if(cristal.visible){
-                        switch(cristal.tint){
-                            case "#fffd7e":    // Up arrow key 
-                            disgust += 1
-                            console.log(disgust)
+        function cristalCollision(player, cristal) {
+            if (hitTestRectangle(player, cristal)) {
+                // console.log(`player a chocado con ${happy}`)
+                if (cristal.visible) {
+                    switch (cristal.tint) {
+                        case "#fffd7e":    // Up arrow key 
+                            disgustCount += 1
+                            console.log(disgustCount)
                             arrSprites[Math.round(Math.random() * 5)].tint = "#fffd7e"
                             break;
-                            case "#c7ffef":    // Up arrow key 
-                            happy += 1
-                             console.log(happy)
-                             arrSprites[Math.round(Math.random() * 5)].tint = "#c7ffef"
+                        case "#c7ffef":    // Up arrow key 
+                            happyCount += 1
+                            console.log(happyCount)
+                            arrSprites[Math.round(Math.random() * 5)].tint = "#c7ffef"
                             break;
-                            case "#a9ff7e":    // Up arrow key 
-                            angry += 1
-                             console.log(angry)
-                             arrSprites[Math.round(Math.random() * 5)].tint = "#a9ff7e"
+                        case "#a9ff7e":    // Up arrow key 
+                            angryCount += 1
+                            console.log(angryCount)
+                            arrSprites[Math.round(Math.random() * 5)].tint = "#a9ff7e"
                             break;
-                            case "#ff7e7e":    // Up arrow key 
-                            sad += 1
-                             console.log(sad)
-                             arrSprites[Math.round(Math.random() * 5)].tint = "#ff7e7e"
+                        case "#ff7e7e":    // Up arrow key 
+                            sadCount += 1
+                            console.log(sadCount)
+                            arrSprites[Math.round(Math.random() * 5)].tint = "#ff7e7e"
                             break;
-                        }
-                       // var col = cristal.tint
-                        //console.log(col)
-                        cristal.visible = false
                     }
-                   
+                    // var col = cristal.tint
+                    //console.log(col)
+                    cristal.visible = false
                 }
+
             }
+        }
 
 
-            function nextLevel(player, endZone){
-                if(hitTestRectangle(player,endZone)){
-                    obeliscEnd.visible = false
-                    player.x = 955
-                    player.y = 225
-                   // player.rotation = 1
-                                 
-                    player.pivot.set(obeliscEnd.width / 2, obeliscEnd.height / 2);
-                    for(let i=10; i<1; i++){
+        function nextLevel(player, endZone) {
+            if (hitTestRectangle(player, endZone)) {
+                obeliscEnd.visible = false
+                player.x = 955
+                player.y = 225
+                // player.rotation = 1
 
-                        player.scale.set(0.5, 0.5);
-                        player.rotation += 0.05   
-                    }
-                   
-                      
-                    player.x = 1010
-                    player.y = 280
+                player.pivot.set(obeliscEnd.width / 2, obeliscEnd.height / 2);
+                for (let i = 10; i < 1; i++) {
 
+                    player.scale.set(0.5, 0.5);
+                    player.rotation += 0.05
                 }
+
+
+                player.x = 1010
+                player.y = 280
+
             }
+            goToEnd();
+        }
 
-
-
-          
-
-
+        function animate(frames, speed) {
+            const textureArray = [];
+            for (let i = 0; i < frames.length - 1; i++) {
+                const texture = PIXI.Texture.from(frames[i]);
+                textureArray.push(texture);
+            }
+            const animatedSprite = new PIXI.AnimatedSprite(textureArray, true);
+            animatedSprite.animationSpeed = 0.1;
+            animatedSprite.play();
+            return animatedSprite;
+        }
 
     </script>
 </body>
