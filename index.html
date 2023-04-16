@@ -195,10 +195,13 @@
         let dsert6 = PIXI.Sprite.from('Duna_fondo_03.png');
         let obelisc = PIXI.Sprite.from('Orbe.png');
         let obelisc2 = PIXI.Sprite.from('Fondo_animado_Orbe.png');
+        let obeliscEnd = PIXI.Sprite.from('Cristal_Reinicio.png');
         let background = PIXI.Sprite.from('BGOP2.png');
 
         // let obeliscAnimation = PIXI.Sprite.from('Fondo_animado_Orbe.png');
         enemy.y = 100
+
+        let arrSprites = [dsert1,dsert2,dsert3,dsert4,dsert5,dsert6]
         
         cristal1.x = 1300
         cristal2.x = 1500
@@ -230,11 +233,16 @@
         cristal8.tint = arr_colors[Math.round(Math.random() * 3)]
 
         
+        
 
         // player.tint = 0x252525
        // obelisc.scale.set(0.7,0.7);
         obelisc.x = 900
         obelisc2.x = 900
+        obeliscEnd.x = 1010
+        obeliscEnd.y = 280
+        obeliscEnd.visible = true
+        //obeliscEnd.scale.set(0.7, 0.7);
        // obelisc.y = 0
         //obeliscAnimation.x = 750
 
@@ -263,17 +271,19 @@
 
         // ADD ELEMENTS TO GAME CONTAINER
         gameContainer.addChild(background);
-    
+        gameContainer.addChild(suelo);
         gameContainer.addChild(dsert4);
         gameContainer.addChild(dsert5);
         gameContainer.addChild(dsert6);
-        gameContainer.addChild(suelo);
+       
         gameContainer.addChild(obelisc2);
         gameContainer.addChild(obelisc);
+        gameContainer.addChild(obeliscEnd);
+        gameContainer.addChild(suelo2);
         gameContainer.addChild(dsert1);
         gameContainer.addChild(dsert2);
         gameContainer.addChild(dsert3);
-        gameContainer.addChild(suelo2);
+        
        
         //gameContainer.addChild(obeliscAnimation);
         gameContainer.addChild(player);
@@ -349,6 +359,10 @@
             cristalReSpawn(cristal8)
             cristalCollision(player, cristal8)
 
+            
+            obeliscEnd.rotation += 0.05
+            obeliscEnd.pivot.set(obeliscEnd.width / 2, obeliscEnd.height / 2);
+
             orbAnimation(obelisc2)
             outMap(dsert1)
             outMap(dsert2)
@@ -360,6 +374,7 @@
             moveX *= 0.99
             moveY *= 0.99
             //console.log(moveX)
+            nextLevel(player, obeliscEnd)
 
             if (hitTestRectangle(player, enemy)) {
                // console.log("Collision")
@@ -481,37 +496,31 @@
                    // return console.log(spr.x)
                 }
             }
-/*
-             const colors = {
-                    DISGUST: "#fffd7e", //yellow
-                    HAPPY: "#c7ffef", //cyan
-                    ANGRY: "#a9ff7e", // green
-                    SAD: "#ff7e7e",  //red
-                    WHITE: "#ffffff",
-                    BLACK: "#000000",
-                    GRAY: "#d7d7d7"
-                }
-                */
+
             function cristalCollision(player, cristal){
                 if (hitTestRectangle(player, cristal)){
-                    console.log(`player a chocado con ${happy}`)
+                   // console.log(`player a chocado con ${happy}`)
                     if(cristal.visible){
                         switch(cristal.tint){
                             case "#fffd7e":    // Up arrow key 
                             disgust += 1
                             console.log(disgust)
+                            arrSprites[Math.round(Math.random() * 5)].tint = "#fffd7e"
                             break;
                             case "#c7ffef":    // Up arrow key 
                             happy += 1
                              console.log(happy)
+                             arrSprites[Math.round(Math.random() * 5)].tint = "#c7ffef"
                             break;
                             case "#a9ff7e":    // Up arrow key 
                             angry += 1
                              console.log(angry)
+                             arrSprites[Math.round(Math.random() * 5)].tint = "#a9ff7e"
                             break;
                             case "#ff7e7e":    // Up arrow key 
                             sad += 1
                              console.log(sad)
+                             arrSprites[Math.round(Math.random() * 5)].tint = "#ff7e7e"
                             break;
                         }
                        // var col = cristal.tint
@@ -523,8 +532,26 @@
             }
 
 
+            function nextLevel(player, endZone){
+                if(hitTestRectangle(player,endZone)){
+                    obeliscEnd.visible = false
+                    player.x = 955
+                    player.y = 225
+                   // player.rotation = 1
+                                 
+                    player.pivot.set(obeliscEnd.width / 2, obeliscEnd.height / 2);
+                    for(let i=10; i<1; i++){
 
+                        player.scale.set(0.5, 0.5);
+                        player.rotation += 0.05   
+                    }
+                   
+                      
+                    player.x = 1010
+                    player.y = 280
 
+                }
+            }
 
 
 
