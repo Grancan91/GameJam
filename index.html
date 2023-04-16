@@ -19,9 +19,9 @@
 
         /* CONTAINERS */
         const startContainer = new PIXI.Container();
-        const instructionsContainer = new PIXI.Container();
         const gameContainer = new PIXI.Container();
-        const endContainer = new  PIXI.Container();
+        const endContainer = new PIXI.Container();
+        const backg = new PIXI.Container();
 
         /* ENUMS */
         const colors = {
@@ -70,7 +70,7 @@
             stroke: colors.WHITE,
             strokeThickness: 5,
             dropShadow: true,
-            dropShadowColor: colors.HAPPY,
+            dropShadowColor: colors.BLACK,
             dropShadowBlur: 4,
             dropShadowAngle: Math.PI / 6,
             dropShadowDistance: 6,
@@ -132,9 +132,12 @@
         });
 
         /* BACKGROUND */
+        //const texture = new PIXI.Texture('background.jpeg');
+        /* texture.width = 1280;
+        texture.height = 720; */
         const background = PIXI.Sprite.from('background.jpeg');
-        background.tint = colors.BLACK;
-        app.stage.addChild(background);
+        backg.addChild(background);
+        app.stage.addChild(backg);
 
         /* START ELEMENTS */
         // game name
@@ -142,10 +145,30 @@
         title.x = app.screen.width / 2.5;
         title.y = 30;
         // character
-        const ghost = PIXI.Sprite.from('Personaje_jugable_1.png');
-        ghost.x = app.screen.width / 2.3;
+        const ghostSpawn = [
+            'SPAWN01.png',
+            'SPAWN02.png',
+            'SPAWN03.png',
+            'SPAWN04.png',
+            'SPAWN05.png',
+            'SPAWN06.png',
+            'SPAWN07.png',
+        ];
+        const textureArray = [];
+
+        for (let i = 0; i < 4; i++) {
+            const texture = PIXI.Texture.from(ghostSpawn[i]);
+            textureArray.push(texture);
+        }
+        const animatedSprite = new PIXI.AnimatedSprite(textureArray, true);
+        animatedSprite.animationSpeed = 0.01;
+        animatedSprite.play();
+        app.stage.addChild(animatedSprite);
+
+        //const ghost = PIXI.Sprite.from('Personaje_jugable_1.png');
+       /*  ghost.x = app.screen.width / 2.3;
         ghost.y = 100;
-        ghost.scale.set(0.4)
+        ghost.scale.set(0.4) */
         // instructions title
         const instruction = new PIXI.Text("Instrucciones", titleStyle);
         instruction.x = app.screen.width / 3;
@@ -205,7 +228,7 @@
 
         /* ADD ELEMENTS TO CONTAINERS */
         startContainer.addChild(title);
-        startContainer.addChild(ghost); 
+        //startContainer.addChild(ghost);
         startContainer.addChild(instruction);
         startContainer.addChild(moveKeys);
         startContainer.addChild(moveArrow);
@@ -342,7 +365,7 @@
         endContainer.addChild(finalImage);
         endContainer.addChild(conclusion);
         endContainer.addChild(startAgain);
-        
+
         endContainer.visible = false;
         app.stage.addChild(endContainer);
 
@@ -413,32 +436,35 @@
                     break;
                 case 88:    // X key   
                     //if(currentScreen == screens.START) currentScreen = screens.GAME;
-                    if(startContainer.visible) {
+                    if (startContainer.visible) {
                         startContainer.visible = false;
                         gameContainer.visible = true;
                         endContainer.visible = false;
+                        backg.visible = false;
                     }
-                    else if (endContainer.visible){
+                    else if (endContainer.visible) {
                         startContainer.visible = true;
                         gameContainer.visible = false;
                         endContainer.visible = false;
-                    } else if(gameContainer.visible){
+                        backg.visible = true;
+                    } else if (gameContainer.visible) {
                         startContainer.visible = false;
                         gameContainer.visible = false;
                         endContainer.visible = true;
+                        backg.visible = true;
                     }
                     break;
                 case 27:    // Esc key
                     //if(currentScreen == screens.GAME) currentScreen = screens.START;
-                    if(startContainer.visible) {
+                    if (startContainer.visible) {
                         gameContainer.visible = false;
                         endContainer.visible = false;
                     }
-                    else if (endContainer.visible){
+                    else if (endContainer.visible) {
                         startContainer.visible = true;
                         gameContainer.visible = false;
                         endContainer.visible = false;
-                    } else if(gameContainer.visible){
+                    } else if (gameContainer.visible) {
                         startContainer.visible = true;
                         gameContainer.visible = false;
                         endContainer.visible = false;
