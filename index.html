@@ -12,10 +12,10 @@
         document.addEventListener('keydown', onKeyDown, false);
 
         /* IMPORTANT VARIABLES */
-        let sadCount = 0;
-        let angryCount = 0;
-        let happyCount = 0;
-        let disgustCount = 0;
+        var sadCount = 0;
+        var angryCount = 0;
+        var happyCount = 0;
+        var disgustCount = 0;
 
         /* CONTAINERS */
         const startContainer = new PIXI.Container();
@@ -44,39 +44,6 @@
         const ghostHappy = ['BASICGHOST.png', 'HAPPY02.png', 'HAPPY03.png', 'HAPPY04.png', 'HAPPY05.png'];
         const ghostSad = ['BASICGHOST.png', 'SAD02.png', 'SAD03.png', 'SAD04.png'];
 
-        /* SCREEN CHANGING*/
-        function goToStart() {
-            startContainer.visible = true;
-            gameContainer.visible = false;
-            endContainer.visible = false;
-            backg.visible = true;
-        }
-
-        function goToGame() {
-            startContainer.visible = false;
-            gameContainer.visible = true;
-            endContainer.visible = false;
-            backg.visible = false;
-        }
-
-        function goToEnd() {
-            startContainer.visible = false;
-            gameContainer.visible = false;
-            endContainer.visible = true;
-            backg.visible = true;
-        }
-
-        /* 
-        //change screens with states instead of booleans
-        var currentScreen = screens.START;
-        switch (currentScreen) {
-            case screens.START:
-                goToStart();
-                break;
-            case screens.GAME:
-                goToGame();
-                break;
-        } */
 
         // TEXT STYLES
         const titleStyle = new PIXI.TextStyle({
@@ -150,81 +117,80 @@
         });
 
         /* BACKGROUND */
-        const bkg = PIXI.Sprite.from('background.jpeg');
+        let bkg = PIXI.Sprite.from('background.jpeg');
         backg.addChild(bkg);
         app.stage.addChild(backg);
 
         /* START ELEMENTS */
         // game name
-        const title = new PIXI.Text('MY PATH', titleStyle);
+        let title = new PIXI.Text('MY PATH', titleStyle);
         title.x = app.screen.width / 2.5;
         title.y = 30;
         // character
-        const spawnGhost = animate(ghostSpawn, 0.1);
+        let spawnGhost = animate(ghostSpawn, 0.1);
         spawnGhost.x = app.screen.width / 2.3;
         spawnGhost.y = 100;
         spawnGhost.scale.set(0.4)
         startContainer.addChild(spawnGhost);
         // instructions title
-        const instruction = new PIXI.Text("Instrucciones", titleStyle);
+        let instruction = new PIXI.Text("Instrucciones", titleStyle);
         instruction.x = app.screen.width / 3;
         instruction.y = 265;
         // moveKeys
-        const moveKeys = new PIXI.Text("A, W, S, D", keysStyle);
+        let moveKeys = new PIXI.Text("A, W, S, D", keysStyle);
         moveKeys.x = app.screen.width / 12;
         moveKeys.y = 350;
         // moveArrow
-        const moveArrow = new PIXI.Text("->", arrowStyle);
+        let moveArrow = new PIXI.Text("->", arrowStyle);
         moveArrow.x = app.screen.width / 4;
         moveArrow.y = 350;
         // moveText
-        const moveText = new PIXI.Text("Mover al fantasmita perdido", arrowStyle);
+        let moveText = new PIXI.Text("Mover al fantasmita perdido", arrowStyle);
         moveText.x = app.screen.width / 3.6;
         moveText.y = 350;
         // objectiveKey
-        const objectiveKey = new PIXI.Text("Objetivo", keysStyle);
+        let objectiveKey = new PIXI.Text("Objetivo", keysStyle);
         objectiveKey.x = app.screen.width / 12;
         objectiveKey.y = 400;
         // objectiveArrow
-        const objectiveArrow = new PIXI.Text("->", arrowStyle);
+        let objectiveArrow = new PIXI.Text("->", arrowStyle);
         objectiveArrow.x = app.screen.width / 4;
         objectiveArrow.y = 400;
         // objectiveText
-        const objectiveText = new PIXI.Text("Elegir los cristales emocionales que quieras, para averiguar tu identidad", arrowStyle);
+        let objectiveText = new PIXI.Text("Elegir los cristales emocionales que quieras, para averiguar tu identidad", arrowStyle);
         objectiveText.x = app.screen.width / 3.6;
         objectiveText.y = 400;
         // finish key
-        const finishKey = new PIXI.Text("Terminar juego", keysStyle);
+        let finishKey = new PIXI.Text("Terminar juego", keysStyle);
         finishKey.x = app.screen.width / 12;
         finishKey.y = 450;
         // finishArrow
-        const finishArrow = new PIXI.Text("->", arrowStyle);
+        let finishArrow = new PIXI.Text("->", arrowStyle);
         finishArrow.x = app.screen.width / 4;
         finishArrow.y = 450;
         // finishText
-        const finishText = new PIXI.Text("Entrar en el portal", arrowStyle);
+        let finishText = new PIXI.Text("Entrar en el portal", arrowStyle);
         finishText.x = app.screen.width / 3.6;
         finishText.y = 450;
         // key to exit
-        const escKey = new PIXI.Text("Esc", keysStyle);
+        let escKey = new PIXI.Text("Esc", keysStyle);
         escKey.x = app.screen.width / 12;
         escKey.y = 500;
         // escArrow
-        const escArrow = new PIXI.Text("->", arrowStyle);
+        let escArrow = new PIXI.Text("->", arrowStyle);
         escArrow.x = app.screen.width / 4;
         escArrow.y = 500;
         // escText
-        const escText = new PIXI.Text("Ir a inicio", arrowStyle);
+        let escText = new PIXI.Text("Ir a inicio", arrowStyle);
         escText.x = app.screen.width / 3.6;
         escText.y = 500;
         // start game
-        const subTitle = new PIXI.Text('Pulsar X para iniciar tu camino.', subtitleStyle);
+        let subTitle = new PIXI.Text('Pulsar X para iniciar tu camino.', subtitleStyle);
         subTitle.x = app.screen.width / 4.3;
         subTitle.y = 600;
 
         /* ADD ELEMENTS TO CONTAINERS */
         startContainer.addChild(title);
-        //startContainer.addChild(ghost);
         startContainer.addChild(instruction);
         startContainer.addChild(moveKeys);
         startContainer.addChild(moveArrow);
@@ -260,7 +226,7 @@
         let dsert3 = PIXI.Sprite.from('Duna_03.png');
         let dsert4 = PIXI.Sprite.from('Duna_fondo_01.png');
         let dsert5 = PIXI.Sprite.from('Duna_fondo_02.png');
-        //let dsert6 = PIXI.Sprite.from('Duna_fondo_03.png');
+        let dsert6 = PIXI.Sprite.from('Duna_fondo_01.png');
         let obelisc = PIXI.Sprite.from('Orbe.png');
         let obelisc2 = PIXI.Sprite.from('Fondo_animado_Orbe.png');
         let obeliscEnd = PIXI.Sprite.from('Cristal_Reinicio.png');
@@ -268,8 +234,9 @@
 
         // let obeliscAnimation = PIXI.Sprite.from('Fondo_animado_Orbe.png');
         enemy.y = 100
+        player.x = app.screen.width / 20;
 
-        let arrSprites = [dsert1, dsert2, dsert3, dsert4, dsert5, dsert6]
+        let arrSprites = [dsert1, dsert2, dsert3, dsert4, dsert5, dsert6, background]
 
         cristal1.x = 1300
         cristal2.x = 1500
@@ -291,14 +258,14 @@
         cristal7.y = 200
         cristal8.y = 50
 
-        cristal1.tint = arr_colors[Math.round(Math.random() * 3)]
-        cristal2.tint = arr_colors[Math.round(Math.random() * 3)]
-        cristal3.tint = arr_colors[Math.round(Math.random() * 3)]
-        cristal4.tint = arr_colors[Math.round(Math.random() * 3)]
-        cristal5.tint = arr_colors[Math.round(Math.random() * 3)]
-        cristal6.tint = arr_colors[Math.round(Math.random() * 3)]
-        cristal7.tint = arr_colors[Math.round(Math.random() * 3)]
-        cristal8.tint = arr_colors[Math.round(Math.random() * 3)]
+        cristal1.tint = arr_colors[Math.floor(Math.random() * 4)]
+        cristal2.tint = arr_colors[Math.floor(Math.random() * 4)]
+        cristal3.tint = arr_colors[Math.floor(Math.random() * 4)]
+        cristal4.tint = arr_colors[Math.floor(Math.random() * 4)]
+        cristal5.tint = arr_colors[Math.floor(Math.random() * 4)]
+        cristal6.tint = arr_colors[Math.floor(Math.random() * 4)]
+        cristal7.tint = arr_colors[Math.floor(Math.random() * 4)]
+        cristal8.tint = arr_colors[Math.floor(Math.random() * 4)]
 
         // player.tint = 0x252525
         // obelisc.scale.set(0.7,0.7);
@@ -307,6 +274,7 @@
         obeliscEnd.x = 1010
         obeliscEnd.y = 280
         obeliscEnd.visible = true
+        obeliscEnd.tint = colors.WHITE
         //obeliscEnd.scale.set(0.7, 0.7);
         // obelisc.y = 0
         //obeliscAnimation.x = 750
@@ -356,64 +324,64 @@
         gameContainer.addChild(cristal6);
         gameContainer.addChild(cristal7);
         gameContainer.addChild(cristal8);
-        gameContainer.addChild(enemy);
+        //gameContainer.addChild(enemy);
         gameContainer.visible = false;
         app.stage.addChild(gameContainer);
 
         /* THE END ELEMENTS */
         // title
-        const endTitle = new PIXI.Text("Has elegido este camino:", titleStyle);
+        let endTitle = new PIXI.Text("Has elegido este camino:", titleStyle);
         endTitle.x = app.screen.width / 4.5;
         endTitle.y = 30;
         // sad
-        const sad = PIXI.Sprite.from('Personaje_jugable_1.png');
+        let sad = PIXI.Sprite.from('Personaje_jugable_1.png');
         sad.x = app.screen.width / 12;
         sad.y = 170;
         sad.scale.set(0.3)
         sad.tint = colors.SAD;
-        const sCount = new PIXI.Text("x" + sadCount, withdoutShadowStyle);
+        let sCount = new PIXI.Text("x" + sadCount.toString(), withdoutShadowStyle);
         sCount.x = app.screen.width / 10;
         sCount.y = 300;
         // happy
-        const happy = PIXI.Sprite.from('Personaje_jugable_1.png');
+        let happy = PIXI.Sprite.from('Personaje_jugable_1.png');
         happy.x = app.screen.width / 3;
         happy.y = 170;
         happy.scale.set(0.3)
         happy.tint = colors.HAPPY;
-        const hCount = new PIXI.Text("x" + happyCount, withdoutShadowStyle);
+        let hCount = new PIXI.Text("x" + happyCount.toString(), withdoutShadowStyle);
         hCount.x = app.screen.width / 2.8;
         hCount.y = 300;
         // disgust
-        const disgust = PIXI.Sprite.from('Personaje_jugable_1.png');
+        let disgust = PIXI.Sprite.from('Personaje_jugable_1.png');
         disgust.x = app.screen.width / 1.7;
         disgust.y = 170;
         disgust.scale.set(0.3)
         disgust.tint = colors.DISGUST;
-        const dCount = new PIXI.Text("x" + disgustCount, withdoutShadowStyle);
+        let dCount = new PIXI.Text("x" + disgustCount.toString(), withdoutShadowStyle);
         dCount.x = app.screen.width / 1.63;
         dCount.y = 300;
         // angry
-        const angry = PIXI.Sprite.from('Personaje_jugable_1.png');
+        let angry = PIXI.Sprite.from('Personaje_jugable_1.png');
         angry.x = app.screen.width / 1.2;
         angry.y = 170;
         angry.scale.set(0.3)
         angry.tint = colors.ANGRY;
-        const aCount = new PIXI.Text("x" + angryCount, withdoutShadowStyle);
+        let aCount = new PIXI.Text("x" + angryCount.toString(), withdoutShadowStyle);
         aCount.x = app.screen.width / 1.17;
         aCount.y = 300;
         // final image
-        const finalImage = PIXI.Sprite.from('Asets/x2/PJx2.png');
+        let finalImage = animate(ghostHappy, 0.2);
         finalImage.x = app.screen.width / 6;
         finalImage.y = 400;
         finalImage.scale.set(0.7);
         finalImage.tint = colors.WHITE;
         // conclusion
-        const conclusion = new PIXI.Text('Está enfadado. Relájese :)', paragraphStyle);
+        let conclusion = new PIXI.Text('Está enfadado. Relájese :)', paragraphStyle);
         conclusion.x = app.screen.width / 1.5;
         conclusion.y = 400;
         conclusion.tint = colors.WHITE;
         // start game again
-        const startAgain = new PIXI.Text('Pulsar X o Esc para volver a inicio', subtitleStyle);
+        let startAgain = new PIXI.Text('Pulsar X o Esc para volver a inicio', subtitleStyle);
         startAgain.x = app.screen.width / 5;
         startAgain.y = 650;
 
@@ -449,6 +417,9 @@
             update(delta);
         });
 
+        var scale1 = 1
+        var scale2 = 1
+        var gameOver = false
 
         function update(delta) {
             elapsed += delta;
@@ -461,6 +432,21 @@
             dsert5.x -= wSpeed2
             dsert6.x -= wSpeed2
             obelisc2.y -= 10
+
+
+            if (gameOver) {
+                player.scale.set(scale1, scale2);
+                scale1 *= 0.99
+                scale2 *= 0.99
+                if (scale2 < 0.15) {
+                    startContainer.visible = false;
+                    gameContainer.visible = false;
+                    endContainer.visible = true;
+                    backg.visible = true;
+                    restartPlayer();
+                }
+            }
+
 
             //Cristales Respaw
             cristal1.x -= 5
@@ -534,11 +520,37 @@
                     moveX = pSpeed;
                     break;
                 case 88:    // X key   
+                    if (startContainer.visible) {
+                        startContainer.visible = false;
+                        gameContainer.visible = true;
+                        endContainer.visible = false;
+                        backg.visible = false;
+                    }
+                    else if (endContainer.visible) {
+                        startContainer.visible = true;
+                        gameContainer.visible = false;
+                        endContainer.visible = false;
+                        backg.visible = true;
+                        restartPlayer();
+                    }
+                    break;
                 case 27:    // Esc key
                     //if(currentScreen == screens.GAME) currentScreen = screens.START;
-                    if (startContainer.visible) goToGame();
-                    else if (endContainer.visible) goToStart();
-                    else if (gameContainer.visible) goToEnd();
+                    if (gameContainer.visible) {
+                        startContainer.visible = true;
+                        gameContainer.visible = false;
+                        endContainer.visible = false;
+                        backg.visible = true;
+                        restartPlayer();
+                    }
+                    else if (endContainer.visible) {
+                        startContainer.visible = true;
+                        gameContainer.visible = false;
+                        endContainer.visible = false;
+                        backg.visible = true;
+                        restartPlayer();
+                    }
+                    break;
             }
 
         }
@@ -612,8 +624,8 @@
             let arrRandomX = [1300, 1400, 1500, 1600, 1800, 2000, 2200, 2400]
             if (spr.x <= -1320) {
 
-                spr.tint = arr_colors[Math.round(Math.random() * 3)]
-                spr.x = arrRandomX[Math.round(Math.random() * 7)]
+                spr.tint = arr_colors[Math.floor(Math.random() * 4)]
+                spr.x = arrRandomX[Math.floor(Math.random() * 8)]
 
                 if (!spr.visible) {
                     spr.visible = true
@@ -623,35 +635,44 @@
             }
         }
 
+        colorSelect = 0
         function cristalCollision(player, cristal) {
             if (hitTestRectangle(player, cristal)) {
+
                 // console.log(`player a chocado con ${happy}`)
                 if (cristal.visible) {
                     switch (cristal.tint) {
                         case "#fffd7e":    // Up arrow key 
                             disgustCount += 1
                             console.log(disgustCount)
-                            arrSprites[Math.round(Math.random() * 5)].tint = "#fffd7e"
+                            arrSprites[colorSelect].tint = "#fffd7e"
+                            colorSelect++
                             break;
                         case "#c7ffef":    // Up arrow key 
                             happyCount += 1
                             console.log(happyCount)
-                            arrSprites[Math.round(Math.random() * 5)].tint = "#c7ffef"
+                            arrSprites[colorSelect].tint = "#c7ffef"
+                            colorSelect++
                             break;
                         case "#a9ff7e":    // Up arrow key 
                             angryCount += 1
                             console.log(angryCount)
-                            arrSprites[Math.round(Math.random() * 5)].tint = "#a9ff7e"
+                            arrSprites[colorSelect].tint = "#a9ff7e"
+                            colorSelect++
                             break;
                         case "#ff7e7e":    // Up arrow key 
                             sadCount += 1
                             console.log(sadCount)
-                            arrSprites[Math.round(Math.random() * 5)].tint = "#ff7e7e"
+                            arrSprites[colorSelect].tint = "#ff7e7e"
+                            colorSelect++
                             break;
                     }
                     // var col = cristal.tint
                     //console.log(col)
                     cristal.visible = false
+                    if (colorSelect >= 7) {
+                        colorSelect = 0
+                    }
                 }
 
             }
@@ -664,33 +685,66 @@
                 player.x = 955
                 player.y = 225
                 // player.rotation = 1
-
+                player.rotation += 0.05
                 player.pivot.set(obeliscEnd.width / 2, obeliscEnd.height / 2);
-                for (let i = 10; i < 1; i++) {
-
-                    player.scale.set(0.5, 0.5);
-                    player.rotation += 0.05
-                }
-
-
-                player.x = 1010
-                player.y = 280
-
+                gameOver = true
             }
-            goToEnd();
         }
 
         function animate(frames, speed) {
-            const textureArray = [];
+            let textureArray = [];
             for (let i = 0; i < frames.length - 1; i++) {
-                const texture = PIXI.Texture.from(frames[i]);
+                let texture = PIXI.Texture.from(frames[i]);
                 textureArray.push(texture);
             }
-            const animatedSprite = new PIXI.AnimatedSprite(textureArray, true);
+            let animatedSprite = new PIXI.AnimatedSprite(textureArray, true);
             animatedSprite.animationSpeed = 0.1;
             animatedSprite.play();
             return animatedSprite;
         }
+
+        function restartPlayer() {
+            player.x = app.screen.width / 20;
+            player.y = 0
+            player.scale.set(1);
+        }
+
+
+        /* SCREEN CHANGING*/
+        /* function goToStart() {
+            startContainer.visible = true;
+            gameContainer.visible = false;
+            endContainer.visible = false;
+            backg.visible = true;
+        }
+
+        function goToGame() {
+            startContainer.visible = false;
+            gameContainer.visible = true;
+            endContainer.visible = false;
+            backg.visible = false;
+        }
+
+        function goToEnd() {
+            startContainer.visible = false;
+            gameContainer.visible = false;
+            endContainer.visible = true;
+            backg.visible = true;
+            player.x = 1010
+            player.y = 280
+        } */
+
+        /*
+        //change screens with states instead of booleans
+        var currentScreen = screens.START;
+        switch (currentScreen) {
+            case screens.START:
+                goToStart();
+                break;
+            case screens.GAME:
+                goToGame();
+                break;
+        } */
 
     </script>
 </body>
