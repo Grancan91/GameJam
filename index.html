@@ -156,12 +156,12 @@
         ];
         const textureArray = [];
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < ghostSpawn.length-1; i++) {
             const texture = PIXI.Texture.from(ghostSpawn[i]);
             textureArray.push(texture);
         }
         const animatedSprite = new PIXI.AnimatedSprite(textureArray, true);
-        animatedSprite.animationSpeed = 0.01;
+        animatedSprite.animationSpeed = 0.1;
         animatedSprite.play();
         app.stage.addChild(animatedSprite);
 
