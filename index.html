@@ -3,14 +3,16 @@
 
 <head>
     <script src="https://pixijs.download/release/pixi.min.js"></script>
+    <script src="https://unpkg.com/@pixi/sound/dist/pixi-sound.js"></script>
 </head>
 
 <body>
     <script>
+        
         let app = new PIXI.Application({ width: 1280, height: 720 });
         document.body.appendChild(app.view);
         document.addEventListener('keydown', onKeyDown, false);
-
+        
         /* IMPORTANT VARIABLES */
         var sadCount = 0;
         var angryCount = 0;
@@ -238,6 +240,13 @@
 
         let arrSprites = [dsert1, dsert2, dsert3, dsert4, dsert5, dsert6, background]
 
+        //debugger;
+        const sound = PIXI.sound.Sound.from('game_music.mp3');
+        const soundEnd = PIXI.sound.Sound.from('end.mp3');
+        soundEnd.stop()
+        sound.play();
+
+
         cristal1.x = 1300
         cristal2.x = 1500
         cristal3.x = 1700
@@ -376,9 +385,9 @@
         finalImage.scale.set(0.7);
         finalImage.tint = colors.WHITE;
         // conclusion
-        let conclusion = new PIXI.Text('Está enfadado. Relájese :)', paragraphStyle);
-        conclusion.x = app.screen.width / 1.5;
-        conclusion.y = 400;
+        let conclusion = new PIXI.Text('Sientes felicidad hacia la vida por muchas cosas malas que sucedan..:)', paragraphStyle);
+        conclusion.x = app.screen.width / 1.8;
+        conclusion.y = 390;
         conclusion.tint = colors.WHITE;
         // start game again
         let startAgain = new PIXI.Text('Pulsar X o Esc para volver a inicio', subtitleStyle);
@@ -448,6 +457,9 @@
                     endContainer.visible = true;
                     backg.visible = true;
                     restartPlayer();
+                    sound.stop()
+                    soundEnd.play()
+                    
                 }
             }
 
