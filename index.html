@@ -337,38 +337,30 @@
         let sad = PIXI.Sprite.from('Personaje_jugable_1.png');
         sad.x = app.screen.width / 12;
         sad.y = 170;
-        sad.scale.set(0.3)
+        sad.scale.set(1)
         sad.tint = colors.SAD;
-        let sCount = new PIXI.Text("x" + sadCount.toString(), withdoutShadowStyle);
-        sCount.x = app.screen.width / 10;
-        sCount.y = 300;
+
         // happy
         let happy = PIXI.Sprite.from('Personaje_jugable_1.png');
         happy.x = app.screen.width / 3;
         happy.y = 170;
-        happy.scale.set(0.3)
+        happy.scale.set(1)
         happy.tint = colors.HAPPY;
-        let hCount = new PIXI.Text("x" + happyCount.toString(), withdoutShadowStyle);
-        hCount.x = app.screen.width / 2.8;
-        hCount.y = 300;
+
         // disgust
         let disgust = PIXI.Sprite.from('Personaje_jugable_1.png');
         disgust.x = app.screen.width / 1.7;
         disgust.y = 170;
-        disgust.scale.set(0.3)
+        disgust.scale.set(1)
         disgust.tint = colors.DISGUST;
-        let dCount = new PIXI.Text("x" + disgustCount.toString(), withdoutShadowStyle);
-        dCount.x = app.screen.width / 1.63;
-        dCount.y = 300;
+
         // angry
         let angry = PIXI.Sprite.from('Personaje_jugable_1.png');
         angry.x = app.screen.width / 1.2;
         angry.y = 170;
-        angry.scale.set(0.3)
+        angry.scale.set(1)
         angry.tint = colors.ANGRY;
-        let aCount = new PIXI.Text("x" + angryCount.toString(), withdoutShadowStyle);
-        aCount.x = app.screen.width / 1.17;
-        aCount.y = 300;
+
         // final image
         let finalImage = animate(ghostHappy, 0.2);
         finalImage.x = app.screen.width / 6;
@@ -388,13 +380,9 @@
         /* ADD ELEMENTS TO END*/
         endContainer.addChild(endTitle);
         endContainer.addChild(sad);
-        endContainer.addChild(sCount);
         endContainer.addChild(happy);
-        endContainer.addChild(hCount);
         endContainer.addChild(disgust);
-        endContainer.addChild(dCount);
         endContainer.addChild(angry);
-        endContainer.addChild(aCount);
         endContainer.addChild(finalImage);
         endContainer.addChild(conclusion);
         endContainer.addChild(startAgain);
@@ -442,6 +430,7 @@
                 player.scale.set(scale1, scale2);
                 scale1 *= 0.99
                 scale2 *= 0.99
+                renderUpdatedCounts();
                 if (scale2 < 0.15) {
                     startContainer.visible = false;
                     gameContainer.visible = false;
@@ -711,6 +700,25 @@
             player.x = app.screen.width / 20;
             player.y = 0
             player.scale.set(1);
+        }
+
+        function renderUpdatedCounts() {
+            let dCount = new PIXI.Text("x" + disgustCount.toString(), withdoutShadowStyle);
+            dCount.x = app.screen.width / 1.63;
+            dCount.y = 300;
+            let aCount = new PIXI.Text("x" + angryCount.toString(), withdoutShadowStyle);
+            aCount.x = app.screen.width / 1.17;
+            aCount.y = 300;
+            let sCount = new PIXI.Text("x" + sadCount.toString(), withdoutShadowStyle);
+            sCount.x = app.screen.width / 10;
+            sCount.y = 300;
+            let hCount = new PIXI.Text("x" + happyCount.toString(), withdoutShadowStyle);
+            hCount.x = app.screen.width / 2.8;
+            hCount.y = 300;
+            endContainer.addChild(aCount);
+            endContainer.addChild(dCount);
+            endContainer.addChild(hCount);
+            endContainer.addChild(sCount);
         }
 
 
