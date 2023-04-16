@@ -298,9 +298,6 @@
         cristal7.tint = arr_colors[Math.round(Math.random() * 3)]
         cristal8.tint = arr_colors[Math.round(Math.random() * 3)]
 
-
-
-
         // player.tint = 0x252525
         // obelisc.scale.set(0.7,0.7);
         obelisc.x = 900
@@ -311,7 +308,6 @@
         //obeliscEnd.scale.set(0.7, 0.7);
         // obelisc.y = 0
         //obeliscAnimation.x = 750
-
 
         //START POSITIONS
         const altura = 622
@@ -333,8 +329,6 @@
         dsert5.x = 2500
         dsert6.x = 4000
 
-
-
         // ADD ELEMENTS TO GAME CONTAINER
         gameContainer.addChild(background);
         gameContainer.addChild(suelo);
@@ -349,7 +343,6 @@
         gameContainer.addChild(dsert1);
         gameContainer.addChild(dsert2);
         gameContainer.addChild(dsert3);
-
 
         //gameContainer.addChild(obeliscAnimation);
         gameContainer.addChild(player);
@@ -453,7 +446,6 @@
         app.ticker.add((delta) => {
             update(delta);
         });
-
 
 
         function update(delta) {
