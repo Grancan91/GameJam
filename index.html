@@ -38,7 +38,8 @@
             GAME: "game",
             END: "end"
         }
-
+        /* ARRAY Colors*/
+        const arr_colors = [colors.DISGUST, colors.HAPPY, colors.ANGRY, colors.SAD]
         /* SCREEN CHANGING*/
         /* var currentScreen = screens.START;
         function goToStart(){
@@ -243,13 +244,22 @@
         startContainer.addChild(escArrow);
         startContainer.addChild(escText);
         startContainer.addChild(subTitle);
-        startContainer.visible = true;
+        startContainer.visible = false;
         app.stage.addChild(startContainer);
 
         /* GAME ELEMENTS */
         let player = PIXI.Sprite.from('Personaje_jugable_1.png');
         let enemy = PIXI.Sprite.from('bunny.png');
-        let suelo = PIXI.Sprite.from('Suelo.png');
+        let cristal1 = PIXI.Sprite.from('Cristal_diamante.png');
+        let cristal2 = PIXI.Sprite.from('Cristal_pentagono.png');
+        let cristal3 = PIXI.Sprite.from('Cristal_Redondo.png');
+        let cristal4 = PIXI.Sprite.from('Cristal_Doble.png');
+        let cristal5 = PIXI.Sprite.from('Cristal_diamante.png');
+        let cristal6 = PIXI.Sprite.from('Cristal_pentagono.png');
+        let cristal7 = PIXI.Sprite.from('Cristal_Redondo.png');
+        let cristal8 = PIXI.Sprite.from('Cristal_Doble.png');
+        let suelo = PIXI.Sprite.from('Base_dunasfondo.png');
+        let suelo2 = PIXI.Sprite.from('Base_dunasfrontal.png');
         let dsert1 = PIXI.Sprite.from('Duna_01.png');
         let dsert2 = PIXI.Sprite.from('Duna_02.png');
         let dsert3 = PIXI.Sprite.from('Duna_03.png');
@@ -257,42 +267,109 @@
         let dsert5 = PIXI.Sprite.from('Duna_fondo_02.png');
         let dsert6 = PIXI.Sprite.from('Duna_fondo_03.png');
         let obelisc = PIXI.Sprite.from('Orbe.png');
+        let obelisc2 = PIXI.Sprite.from('Fondo_animado_Orbe.png');
+        let obeliscEnd = PIXI.Sprite.from('Cristal_Reinicio.png');
+        let background = PIXI.Sprite.from('BGOP2.png');
 
         // let obeliscAnimation = PIXI.Sprite.from('Fondo_animado_Orbe.png');
         enemy.y = 100
-        dsert1.y = 500
-        // player.tint = 0x252525
 
-        obelisc.x = 750
+        let arrSprites = [dsert1,dsert2,dsert3,dsert4,dsert5,dsert6]
+        
+        cristal1.x = 1300
+        cristal2.x = 1500
+        cristal3.x = 1700
+        cristal4.x = 1900
+        cristal5.x = 2100
+        cristal6.x = 2300
+        cristal7.x = 2600
+        cristal8.x = 2800
+
+           // Y -> Min: 600
+
+        cristal1.y = 500
+        cristal2.y = 350
+        cristal3.y = 200
+        cristal4.y = 50
+        cristal5.y = 500
+        cristal6.y = 350
+        cristal7.y = 200
+        cristal8.y = 50
+
+        cristal1.tint = arr_colors[Math.round(Math.random() * 3)]
+        cristal2.tint = arr_colors[Math.round(Math.random() * 3)]
+        cristal3.tint = arr_colors[Math.round(Math.random() * 3)]
+        cristal4.tint = arr_colors[Math.round(Math.random() * 3)]
+        cristal5.tint = arr_colors[Math.round(Math.random() * 3)]
+        cristal6.tint = arr_colors[Math.round(Math.random() * 3)]
+        cristal7.tint = arr_colors[Math.round(Math.random() * 3)]
+        cristal8.tint = arr_colors[Math.round(Math.random() * 3)]
+
+        
+        
+
+        // player.tint = 0x252525
+       // obelisc.scale.set(0.7,0.7);
+        obelisc.x = 900
+        obelisc2.x = 900
+        obeliscEnd.x = 1010
+        obeliscEnd.y = 280
+        obeliscEnd.visible = true
+        //obeliscEnd.scale.set(0.7, 0.7);
+       // obelisc.y = 0
         //obeliscAnimation.x = 750
 
-        suelo.y = 650
-        dsert1.y = 550
-        dsert2.y = 550
-        dsert3.y = 550
-        dsert4.y = 500
-        dsert5.y = 500
 
-        dsert1.x = 100
-        dsert2.x = 1000
-        dsert3.x = 1800
-        dsert4.x = 100
-        dsert5.x = 400
-        dsert6.x = 800
+        //START POSITIONS
+        const altura = 622
+        const altura2 = 560
+
+        suelo.y =  659
+        suelo2.y = 687
+        dsert1.y = altura
+        dsert2.y = altura
+        dsert3.y = altura
+        dsert4.y = altura2
+        dsert5.y = altura2
+        dsert6.y = altura2
+
+        dsert1.x = 1000
+        dsert2.x = 2000
+        dsert3.x = 3000
+        dsert4.x = 1000
+        dsert5.x = 2500
+        dsert6.x = 4000
+
+     
 
         // ADD ELEMENTS TO GAME CONTAINER
+        gameContainer.addChild(background);
         gameContainer.addChild(suelo);
         gameContainer.addChild(dsert4);
         gameContainer.addChild(dsert5);
         gameContainer.addChild(dsert6);
+       
+        gameContainer.addChild(obelisc2);
+        gameContainer.addChild(obelisc);
+        gameContainer.addChild(obeliscEnd);
+        gameContainer.addChild(suelo2);
         gameContainer.addChild(dsert1);
         gameContainer.addChild(dsert2);
         gameContainer.addChild(dsert3);
-        gameContainer.addChild(obelisc);
+        
+       
         //gameContainer.addChild(obeliscAnimation);
         gameContainer.addChild(player);
+        gameContainer.addChild(cristal1);
+        gameContainer.addChild(cristal2);
+        gameContainer.addChild(cristal3);
+        gameContainer.addChild(cristal4);
+        gameContainer.addChild(cristal5);
+        gameContainer.addChild(cristal6);
+        gameContainer.addChild(cristal7);
+        gameContainer.addChild(cristal8);
         gameContainer.addChild(enemy);
-        gameContainer.visible = false;
+        gameContainer.visible = true;
         app.stage.addChild(gameContainer);
 
         /* THE END ELEMENTS */
@@ -370,7 +447,12 @@
         app.stage.addChild(endContainer);
 
         /* GAME EXECUTING */
-        var pSpeed = 2
+        
+        var disgust = 0
+        var happy = 0
+        var angry = 0
+        var sad = 0
+        var pSpeed = 4.5
         var moveY = 0;
         var moveX = 0;
         var wSpeed1 = 2
@@ -384,6 +466,8 @@
             update(delta);
         });
 
+
+        
         function update(delta) {
             elapsed += delta;
             player.y += moveY
@@ -394,7 +478,39 @@
             dsert4.x -= wSpeed2
             dsert5.x -= wSpeed2
             dsert6.x -= wSpeed2
+            obelisc2.y -= 10
 
+            //Cristales Respaw
+            cristal1.x -= 5
+            cristalReSpawn(cristal1)
+            cristalCollision(player,cristal1)
+              cristal2.x -= 5
+            cristalReSpawn(cristal2)
+              cristalCollision(player, cristal2)
+              cristal3.x -= 5
+            cristalReSpawn(cristal3)
+              cristalCollision(player, cristal3)
+              cristal4.x -= 5
+            cristalReSpawn(cristal4)
+              cristalCollision(player, cristal4)
+             cristal5.x -= 5
+            cristalReSpawn(cristal5)
+             cristalCollision(player, cristal5)
+             cristal6.x -= 5
+            cristalReSpawn(cristal6)
+            cristalCollision(player, cristal6)
+             cristal7.x -= 5
+            cristalReSpawn(cristal7)
+            cristalCollision(player, cristal7)
+             cristal8.x -= 5
+            cristalReSpawn(cristal8)
+            cristalCollision(player, cristal8)
+
+            
+            obeliscEnd.rotation += 0.05
+            obeliscEnd.pivot.set(obeliscEnd.width / 2, obeliscEnd.height / 2);
+
+            orbAnimation(obelisc2)
             outMap(dsert1)
             outMap(dsert2)
             outMap(dsert3)
@@ -404,14 +520,15 @@
 
             moveX *= 0.99
             moveY *= 0.99
-            console.log(moveX)
+            //console.log(moveX)
+            nextLevel(player, obeliscEnd)
 
             if (hitTestRectangle(player, enemy)) {
-                console.log("Collision")
+               // console.log("Collision")
                 moveY = 0
                 moveX = 0
             } else {
-                console.log("Not Collision")
+                //console.log("Not Collision")
             }
         }
 
@@ -515,16 +632,105 @@
 
         function outMap(spr) {
             if (spr.x <= -1420) {
-                spr.x = 850
-                return console.log(spr.x)
+                spr.x = 1420
+               // return console.log(spr.x)
             }
         }
         function outMapWall(spr) {
             if (spr.x <= -1420) {
-                spr.x = 850
-                return console.log(spr.x)
+                spr.x = 1420
+                //return spr.x
             }
         }
+
+          function orbAnimation(spr) {
+                if (spr.y <= -3200) {
+                    spr.y = 0
+                    //return spr.x
+                }
+            }
+
+              function getRandomArbitrary(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+
+
+            function cristalReSpawn(spr){
+                let arrRandomX = [1300,1400,1500,1600,1800,2000,2200,2400]
+                if (spr.x <= -1320) {
+                    
+                    spr.tint = arr_colors[Math.round(Math.random() * 3)]
+                    spr.x = arrRandomX[Math.round(Math.random()*7)]
+                    
+                    if(!spr.visible){
+                        spr.visible = true
+                    }
+                    //console.log(`New X of ${spr} = ${spr.x}`)
+                   // return console.log(spr.x)
+                }
+            }
+
+            function cristalCollision(player, cristal){
+                if (hitTestRectangle(player, cristal)){
+                   // console.log(`player a chocado con ${happy}`)
+                    if(cristal.visible){
+                        switch(cristal.tint){
+                            case "#fffd7e":    // Up arrow key 
+                            disgust += 1
+                            console.log(disgust)
+                            arrSprites[Math.round(Math.random() * 5)].tint = "#fffd7e"
+                            break;
+                            case "#c7ffef":    // Up arrow key 
+                            happy += 1
+                             console.log(happy)
+                             arrSprites[Math.round(Math.random() * 5)].tint = "#c7ffef"
+                            break;
+                            case "#a9ff7e":    // Up arrow key 
+                            angry += 1
+                             console.log(angry)
+                             arrSprites[Math.round(Math.random() * 5)].tint = "#a9ff7e"
+                            break;
+                            case "#ff7e7e":    // Up arrow key 
+                            sad += 1
+                             console.log(sad)
+                             arrSprites[Math.round(Math.random() * 5)].tint = "#ff7e7e"
+                            break;
+                        }
+                       // var col = cristal.tint
+                        //console.log(col)
+                        cristal.visible = false
+                    }
+                   
+                }
+            }
+
+
+            function nextLevel(player, endZone){
+                if(hitTestRectangle(player,endZone)){
+                    obeliscEnd.visible = false
+                    player.x = 955
+                    player.y = 225
+                   // player.rotation = 1
+                                 
+                    player.pivot.set(obeliscEnd.width / 2, obeliscEnd.height / 2);
+                    for(let i=10; i<1; i++){
+
+                        player.scale.set(0.5, 0.5);
+                        player.rotation += 0.05   
+                    }
+                   
+                      
+                    player.x = 1010
+                    player.y = 280
+
+                }
+            }
+
+
+
+          
+
+
 
     </script>
 </body>
